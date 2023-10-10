@@ -1,0 +1,41 @@
+<mat-drawer-container class="vw-100 vh-100">
+  <mat-drawer #drawer class="sidenav" color="primary" mode="push">
+
+    <mat-toolbar color="primary" class="d-flex justify-content-between">
+      <span>Main Menu</span>
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon fontIcon="menu"></mat-icon>
+      </button>
+    </mat-toolbar>
+
+  </mat-drawer>
+
+  <div class="d-flex flex-column h-100  ">
+
+    <mat-toolbar color="primary"  class="d-flex justify-content-between" >
+
+      <button mat-icon-button extended aria-label="Show main menu" title="Show main menu" (click)="drawer.toggle()">
+        <mat-icon fontIcon="menu"></mat-icon>
+      </button>
+
+      <span>My App - Henry Chavz</span>
+
+
+     
+      <button mat-button aria-label="Login" title="Login">        
+        <mat-icon fontIcon="account_circle"></mat-icon>
+        Login
+      </button>
+
+
+    </mat-toolbar>
+
+    <div class="w-100 h-100">
+      <router-outlet></router-outlet>
+    </div>
+
+
+
+  </div>
+
+</mat-drawer-container>
