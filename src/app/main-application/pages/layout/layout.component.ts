@@ -6,5 +6,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent {
-  
+
+  menuItems: MenuItem[] = [
+    { title: 'Cursos', url: '/course', icon: 'menu_book' },
+    { title: 'Estudiantes', url: '/student', icon: 'person' },
+    { title: 'Profesores', url: '/teacher', icon: 'school' },
+  ];
+
+
+
+}
+
+interface MenuItem {
+  title: string;
+  url: string;
+  icon: string;
 }

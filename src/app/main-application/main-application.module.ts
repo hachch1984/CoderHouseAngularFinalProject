@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
+import { BrowserModule } from '@angular/platform-browser';
+import { AngularMaterialModule } from '../angular-material/angular-material.module';
 import { MainApplicationRoutingModule } from './main-application-routing.module';
 import { LayoutComponent } from './pages/layout/layout.component';
-import { AngularMaterialModule } from '../angular-material/angular-material.module';
-import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -14,7 +13,7 @@ import { BrowserModule } from '@angular/platform-browser';
   imports: [
     BrowserModule,     
     AngularMaterialModule,
-    MainApplicationRoutingModule,
+    MainApplicationRoutingModule,   
   ],
   exports: [
     MainApplicationRoutingModule,
