@@ -1,0 +1,22 @@
+<div class="d-flex flex-column form p-4">
+
+
+
+    <h1>{{this.data.title}} <mat-icon fontIcon="question_mark"></mat-icon> </h1>
+
+
+    
+        <h4 class="flex-grow-1 d-flex justify-content-center align-items-center message shadow p-3" [innerHTML]="this.data.message"></h4>
+    
+
+
+
+
+    <div class="d-flex justify-content-between ">
+        <button type="submit" mat-raised-button color="primary" class="mr-2" (click)="this.bnAceptar_onClick()">Aceptar
+            <mat-icon fontIcon="done"></mat-icon> </button>
+        <button mat-raised-button color="warn" (click)="this.bnCancelar_onClick()">Cancelar <mat-icon
+                fontIcon="cancel"></mat-icon> </button>
+    </div>
+
+</div>

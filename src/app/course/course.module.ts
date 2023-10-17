@@ -7,6 +7,7 @@ import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
 import { ReportAgrupadoPorTipoComponent } from './pages/report-agrupado-por-tipo/report-agrupado-por-tipo.component';
 import { FormularioInsertarActualizarComponent } from './components/formulario-insertar-actualizar/formulario-insertar-actualizar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListadoGeneralComponent } from './components/listado-general/listado-general.component';
 
 
 export const Course_UrlName='course';
@@ -16,7 +17,8 @@ export const Course_UrlName='course';
   declarations: [
     MainLayoutComponent,
     ReportAgrupadoPorTipoComponent,
-    FormularioInsertarActualizarComponent
+    FormularioInsertarActualizarComponent,
+    ListadoGeneralComponent
   ],
   imports: [
     CommonModule,

@@ -6,8 +6,7 @@ import { CourseType, CourseTypeList } from '../../interfaces/CourseType';
 import { CourseType_Validator } from '../../validators/CourseType_Validator';
 
 
-@Component({
-  selector: 'app-formulario-insertar-actualizar',
+@Component({ 
   templateUrl: './formulario-insertar-actualizar.component.html',
   styleUrls: ['./formulario-insertar-actualizar.component.scss'],
 })
@@ -26,7 +25,7 @@ export class FormularioInsertarActualizarComponent implements OnInit {
   ngOnInit(): void {
     if (!this.data) { this.title = 'Crear Curso'; }
     else {
-      this.title = 'Actualizar Curso';
+      this.title = 'Editar Curso';
 
       this.myForm.patchValue(this.data);
     }
