@@ -18,9 +18,9 @@
 <tbody *ngFor="let course of this.getCourseList(),let i=index;">
     <tr>
         <th scope="row" class="align-middle text-start"> {{i+1}}</th>
-        <td class="align-middle">{{course.name}}</td>
-        <td class="align-middle"> {{course.type.name}}</td>
-        <td class="align-middle"> {{course.description}}</td>
+        <td class="align-middle">{{course.name | pascalCaseWithEndPoint}}</td>
+        <td class="align-middle"> {{course.type.name |pascalCaseWithEndPoint}}</td>
+        <td class="align-middle"> {{course.description |pascalCaseWithEndPoint}}</td>
 
         <td class="d-flex justify-content-around align-items-center">
 

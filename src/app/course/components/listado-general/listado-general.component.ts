@@ -31,9 +31,9 @@ export class ListadoGeneralComponent {
 
 
   private courseList: CourseInterface[] = [
-    { id: '1', name: 'Curso 1', type: CourseTypeList[0], description: 'Descripcion 1' },
-    { id: '2', name: 'Curso 2', type: CourseTypeList[1], description: 'Descripcion 2' },
-    { id: '3', name: 'Curso 0', type: CourseTypeList[2], description: 'Descripcion 3' },
+    { id: '1', name: 'Curso numero uno', type: CourseTypeList[0], description: 'Descripcion 1' },
+    { id: '2', name: 'Curso numero dos', type: CourseTypeList[1], description: 'Descripcion 2' },
+    { id: '3', name: 'Curso numero tres', type: CourseTypeList[2], description: 'Descripcion 3' },
 
   ]
 

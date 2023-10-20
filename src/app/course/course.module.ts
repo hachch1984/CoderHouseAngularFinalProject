@@ -8,6 +8,7 @@ import { ReportAgrupadoPorTipoComponent } from './pages/report-agrupado-por-tipo
 import { FormularioInsertarActualizarComponent } from './components/formulario-insertar-actualizar/formulario-insertar-actualizar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListadoGeneralComponent } from './components/listado-general/listado-general.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 export const Course_UrlName='course';
@@ -26,6 +27,7 @@ export const Course_UrlName='course';
     AngularMaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
   ]
 })
 export class CourseModule { }
