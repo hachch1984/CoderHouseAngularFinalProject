@@ -4,13 +4,16 @@ import { FormModalYesNoComponent } from './componets/form-modal-yes-no/form-moda
  
 import { AngularMaterialModule } from '../angular-material/angular-material.module';
 import { PascalCaseWithEndPoint } from './pipes/pascal-case-with-end-point.pipe';
+import { TitleType01Directive } from './directives/title-type01.directive';
+import { AppComponent } from '../app.component';
  
 
 
 @NgModule({
   declarations: [
     FormModalYesNoComponent,
-    PascalCaseWithEndPoint, 
+    PascalCaseWithEndPoint,
+    TitleType01Directive, 
   ],
   imports: [
     CommonModule,
@@ -19,6 +22,7 @@ import { PascalCaseWithEndPoint } from './pipes/pascal-case-with-end-point.pipe'
   exports:[
     PascalCaseWithEndPoint,
     FormModalYesNoComponent,
-  ]
+    TitleType01Directive,
+  ], 
 })
 export class SharedModule { }

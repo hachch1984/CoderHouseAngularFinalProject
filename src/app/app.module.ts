@@ -6,6 +6,7 @@ import { AngularMaterialModule } from './angular-material/angular-material.modul
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainApplicationModule } from './main-application/main-application.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MainApplicationModule } from './main-application/main-application.modul
     BrowserAnimationsModule,
     AngularMaterialModule,
     MainApplicationModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
