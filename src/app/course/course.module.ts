@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CourseRoutingModule } from './course-routing.module';
-import { AngularMaterialModule } from '../angular-material/angular-material.module';
+import { CourseRoutingModule } from './course-routing.module'; 
 import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
 import { ReportAgrupadoPorTipoComponent } from './pages/report-agrupado-por-tipo/report-agrupado-por-tipo.component';
 import { FormularioInsertarActualizarComponent } from './components/formulario-insertar-actualizar/formulario-insertar-actualizar.component';
@@ -23,8 +22,7 @@ export const Course_UrlName='course';
   ],
   imports: [
     CommonModule,
-    CourseRoutingModule,
-    AngularMaterialModule,
+    CourseRoutingModule, 
     FormsModule,
     ReactiveFormsModule,
     SharedModule,

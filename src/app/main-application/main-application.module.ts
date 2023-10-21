@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 
-import { BrowserModule } from '@angular/platform-browser';
-import { AngularMaterialModule } from '../angular-material/angular-material.module';
+import { BrowserModule } from '@angular/platform-browser'; 
 import { MainApplicationRoutingModule } from './main-application-routing.module';
 import { LayoutComponent } from './pages/layout/layout.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,9 +11,9 @@ import { LayoutComponent } from './pages/layout/layout.component';
     LayoutComponent
   ],
   imports: [
-    BrowserModule,     
-    AngularMaterialModule,
+    BrowserModule,      
     MainApplicationRoutingModule,   
+    SharedModule,
   ],
   exports: [
     MainApplicationRoutingModule,
