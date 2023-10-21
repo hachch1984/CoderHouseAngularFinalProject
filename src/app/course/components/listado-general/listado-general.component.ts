@@ -1,19 +1,41 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FormularioInsertarActualizarComponent } from '../formulario-insertar-actualizar/formulario-insertar-actualizar.component';
-import { CourseInterface } from '../../interfaces/CourseInterface';
-import { CourseTypeList } from '../../interfaces/CourseType';
+import { Observable, finalize, of } from 'rxjs';
 import { FormModalYesNoComponent, FormModalYesNoInterface } from 'src/app/shared/componets/form-modal-yes-no/form-modal-yes-no.component';
-import { Observable, interval, map, switchMap, tap } from 'rxjs';
+import { CourseInterface } from '../../interfaces/CourseInterface';
+import { CourseService } from '../../services/course.service';
+import { FormularioInsertarActualizarComponent } from '../formulario-insertar-actualizar/formulario-insertar-actualizar.component';
 
 @Component({
   selector: 'course-listado-general',
   templateUrl: './listado-general.component.html',
   styleUrls: ['./listado-general.component.scss']
 })
-export class ListadoGeneralComponent {
+export class ListadoGeneralComponent   {
+ 
+  constructor(public dialog: MatDialog, public courseService: CourseService) { }
+  
+  loadingDefaultRows = true;
+  columnNames = ['index', 'name', 'type', 'description', 'actions'];
+ 
+  observableGetCourseList = new Observable<CourseInterface[]>((subscriber) => {
+    setTimeout(() => {
+      subscriber.next(this.courseService.getCourseList());
+      subscriber.complete();
+    }, 2000);
+  }).pipe(
+    finalize(() => {
+      this.loadingDefaultRows = false;
+    })
+  );
 
-  constructor(public dialog: MatDialog) { }
+
+
+  refreshObservableGetCourseList(): void {
+    this.observableGetCourseList = of(this.courseService.getCourseList());
+  }
+
+
 
   bnAgregarCurso_click(): void {
 
@@ -22,48 +44,12 @@ export class ListadoGeneralComponent {
     });
 
     dialogRef.afterClosed().subscribe((result: CourseInterface) => {
-
       if (result) {
-        this.courseList.push(result);
+        this.courseService.addCourse(result);
+        this.refreshObservableGetCourseList()
       }
     });
 
-  }
-
-
-  loadingDefaultRows = true;
-
-  private courseList: CourseInterface[] = [
-    { id: '1', name: 'Curso numero uno', type: CourseTypeList[0], description: 'Descripcion 1' },
-    { id: '2', name: 'Curso numero dos', type: CourseTypeList[1], description: 'Descripcion 2' },
-    { id: '3', name: 'Curso numero tres', type: CourseTypeList[2], description: 'Descripcion 3' },
-    { id: '4', name: 'Curso numero cuatro', type: CourseTypeList[3], description: 'Descripcion 4' },
-    { id: '5', name: 'Curso numero cinco', type: CourseTypeList[4], description: 'Descripcion 5' },
-  ];
-
-
-
-  observableGetCourseList = new Observable<CourseInterface[]>((subscriber) => {
-
-    setTimeout(() => {
-      subscriber.next(this.courseList.sort((a, b) => a.name.localeCompare(b.name)));
-      subscriber.complete();
-    }, 3000);
-  }).pipe(
-    tap(() => this.loadingDefaultRows = false)
-  );
-
-/* 
-  observableGetCourseList2 = new Promise<CourseInterface[]>((resolve) => {
-    setTimeout(() => {
-      resolve(this.courseList.sort((a, b) => a.name.localeCompare(b.name)));
-    }, 2000);
-  }); */
-
-
-
-  getCourseList(): CourseInterface[] {
-    return this.courseList.sort((a, b) => a.name.localeCompare(b.name));
   }
 
 
@@ -76,7 +62,8 @@ export class ListadoGeneralComponent {
     dialogRef.afterClosed().subscribe((result: CourseInterface) => {
 
       if (result) {
-        this.courseList = this.courseList.map(item => item.id === result.id ? result : item)
+        this.courseService.updateCourse(result);
+        this.refreshObservableGetCourseList()
       }
     });
   }
@@ -89,7 +76,8 @@ export class ListadoGeneralComponent {
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.courseList = this.courseList.filter(item => item.id !== course.id);
+        this.courseService.removeCourse(course);
+        this.refreshObservableGetCourseList()
       }
     });
 
@@ -104,3 +92,7 @@ export class ListadoGeneralComponent {
 
 
 }
+function complete(arg0: () => void): ((error: any) => void) | null | undefined {
+  throw new Error('Function not implemented.');
+}
+

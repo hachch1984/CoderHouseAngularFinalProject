@@ -1,17 +1,17 @@
 import { AbstractControl, ValidationErrors } from "@angular/forms";
-import { CourseType, CourseTypeList } from "../interfaces/CourseType";
-
-export const CourseType_Validator = (control: AbstractControl): ValidationErrors | null => {
-
+import { CourseTypeInterface } from "../interfaces/CourseTypeInterface";
+import { CourseService } from "../services/course.service";
 
 
-    const value = control.value as CourseType;
- 
+export const CourseType_Validator = (courseService: CourseService) => (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value as CourseTypeInterface;
+    const courseTypeList = courseService.getCourseTypeList();
 
-    if (CourseTypeList.findIndex((item) => item.id === value.id) === -1) {
+    if (courseTypeList.findIndex((item) => item.id === value.id) === -1) {
         return { courseType: true, message: 'El tipo de curso no es valido' };
     }
 
     return null;
-
 }
+
+ 

@@ -15,7 +15,7 @@
     <mat-form-field class="w-100">
       <mat-label>Tipo de Curso  </mat-label>
       <mat-select formControlName="type">
-        <mat-option *ngFor="let courseType of this.CourseTypeList" [value]="courseType">
+        <mat-option *ngFor="let courseType of this.courseTypeList" [value]="courseType">
           {{courseType.name}}
         </mat-option>
        

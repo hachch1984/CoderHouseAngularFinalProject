@@ -2,19 +2,31 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CourseInterface } from '../../interfaces/CourseInterface';
-import { CourseType, CourseTypeList } from '../../interfaces/CourseType';
+import { CourseTypeInterface } from '../../interfaces/CourseTypeInterface';
 import { CourseType_Validator } from '../../validators/CourseType_Validator';
+import { CourseService } from '../../services/course.service';
 
 
-@Component({ 
+@Component({
   templateUrl: './formulario-insertar-actualizar.component.html',
   styleUrls: ['./formulario-insertar-actualizar.component.scss'],
 })
 export class FormularioInsertarActualizarComponent implements OnInit {
-  CourseTypeList: CourseType[] = CourseTypeList;
+
+  courseTypeList: CourseTypeInterface[] =this.courseService.getCourseTypeList();
+  
+  title: string = '';
+
+  myForm = this.fb.group({
+    id: [''],
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    type: [{} as CourseTypeInterface, [Validators.required,CourseType_Validator(this.courseService)]],
+    description: ['', [Validators.required, Validators.minLength(3)]],
+  });
 
 
   constructor(
+    private courseService: CourseService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<FormularioInsertarActualizarComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CourseInterface,
@@ -22,24 +34,19 @@ export class FormularioInsertarActualizarComponent implements OnInit {
 
 
   }
-  ngOnInit(): void {
-    if (!this.data) { this.title = 'Crear Curso'; }
-    else {
-      this.title = 'Editar Curso';
 
+
+  ngOnInit(): void {
+    if (!this.data) {
+      this.title = 'Crear Curso'; 
+    }
+    else {
+      this.title = 'Editar Curso';    
       this.myForm.patchValue(this.data);
+      this.myForm.get('type')?.setValue( this.courseTypeList.find(x=>x.id===this.data.type.id)!);
     }
   }
 
-  title: string = '';
-
-
-  myForm = this.fb.group({
-    id: [''],
-    name: ['', [Validators.required, Validators.minLength(3)]],
-    type: [{ id: '', name: '' } as CourseType, [Validators.required, CourseType_Validator]],
-    description: ['', [Validators.required, Validators.minLength(3)]],
-  });
 
 
   isInvalid(controlName: string): boolean {
@@ -76,11 +83,9 @@ export class FormularioInsertarActualizarComponent implements OnInit {
 
     let course = this.myForm.value as CourseInterface;
 
-
     if (!course.id) {
       course.id = new Date().toString();
     }
-
 
     this.dialogRef.close(course);
   }

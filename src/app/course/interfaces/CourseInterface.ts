@@ -1,8 +1,8 @@
-import { CourseType } from "./CourseType";
+import { CourseTypeInterface } from "./CourseTypeInterface";
 
 export interface CourseInterface {
     id?: string,
     name: string,
-    type: CourseType,
+    type: CourseTypeInterface,
     description: string,
 }
