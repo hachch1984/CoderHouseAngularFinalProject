@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, finalize, of } from 'rxjs';
+import { Observable, delay, finalize, of } from 'rxjs';
 import { FormModalYesNoComponent, FormModalYesNoInterface } from 'src/app/shared/componets/form-modal-yes-no/form-modal-yes-no.component';
-import { CourseInterface } from '../../interfaces/CourseInterface';
-import { CourseService } from '../../services/course.service';
+import { CourseInterface } from '../../../store/interfaces/CourseInterface';
+import { CourseService } from '../../../store/services/course.service';
 import { FormularioInsertarActualizarComponent } from '../formulario-insertar-actualizar/formulario-insertar-actualizar.component';
 
 @Component({
@@ -18,12 +18,9 @@ export class ListadoGeneralComponent   {
   loadingDefaultRows = true;
   columnNames = ['index', 'name', 'type', 'description', 'actions'];
  
-  observableGetCourseList = new Observable<CourseInterface[]>((subscriber) => {
-    setTimeout(() => {
-      subscriber.next(this.courseService.getCourseList());
-      subscriber.complete();
-    }, 2000);
-  }).pipe(
+  observableGetCourseList =this.courseService.course_getList()
+  .pipe(
+    delay(2000),
     finalize(() => {
       this.loadingDefaultRows = false;
     })
@@ -32,7 +29,7 @@ export class ListadoGeneralComponent   {
 
 
   refreshObservableGetCourseList(): void {
-    this.observableGetCourseList = of(this.courseService.getCourseList());
+    //this.observableGetCourseList = of(this.courseService.course_getList());
   }
 
 
@@ -45,7 +42,7 @@ export class ListadoGeneralComponent   {
 
     dialogRef.afterClosed().subscribe((result: CourseInterface) => {
       if (result) {
-        this.courseService.addCourse(result);
+        this.courseService.course_add(result);
         this.refreshObservableGetCourseList()
       }
     });
@@ -62,7 +59,7 @@ export class ListadoGeneralComponent   {
     dialogRef.afterClosed().subscribe((result: CourseInterface) => {
 
       if (result) {
-        this.courseService.updateCourse(result);
+        this.courseService.course_update(result);
         this.refreshObservableGetCourseList()
       }
     });
@@ -76,7 +73,7 @@ export class ListadoGeneralComponent   {
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.courseService.removeCourse(course);
+        this.courseService.course_remove(course);
         this.refreshObservableGetCourseList()
       }
     });

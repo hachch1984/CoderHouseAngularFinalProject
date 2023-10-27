@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CourseInterface } from '../../interfaces/CourseInterface';
-import { CourseTypeInterface } from '../../interfaces/CourseTypeInterface';
+import { CourseInterface } from '../../../store/interfaces/CourseInterface';
+import { CourseTypeInterface } from '../../../store/interfaces/CourseTypeInterface';
 import { CourseType_Validator } from '../../validators/CourseType_Validator';
-import { CourseService } from '../../services/course.service';
+import { CourseService } from '../../../store/services/course.service';
 
 
 @Component({
@@ -13,14 +13,13 @@ import { CourseService } from '../../services/course.service';
 })
 export class FormularioInsertarActualizarComponent implements OnInit {
 
-  courseTypeList: CourseTypeInterface[] =this.courseService.getCourseTypeList();
-  
+  courseTypeList: CourseTypeInterface[] = [];
   title: string = '';
 
   myForm = this.fb.group({
     id: [''],
     name: ['', [Validators.required, Validators.minLength(3)]],
-    type: [{} as CourseTypeInterface, [Validators.required,CourseType_Validator(this.courseService)]],
+    type: [{} as CourseTypeInterface, [Validators.required, CourseType_Validator(this.courseTypeList)]],
     description: ['', [Validators.required, Validators.minLength(3)]],
   });
 
@@ -37,13 +36,14 @@ export class FormularioInsertarActualizarComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.courseService.courseType_getList().subscribe((courseTypeList) => this.courseTypeList = courseTypeList);
+
     if (!this.data) {
-      this.title = 'Crear Curso'; 
+      this.title = 'Crear Curso';
     }
     else {
-      this.title = 'Editar Curso';    
+      this.title = 'Editar Curso';
       this.myForm.patchValue(this.data);
-      this.myForm.get('type')?.setValue( this.courseTypeList.find(x=>x.id===this.data.type.id)!);
     }
   }
 

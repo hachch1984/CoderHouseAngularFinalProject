@@ -15,10 +15,10 @@
     <mat-form-field class="w-100">
       <mat-label>Tipo de Curso  </mat-label>
       <mat-select formControlName="type">
-        <mat-option *ngFor="let courseType of this.courseTypeList" [value]="courseType">
+        <mat-option  [value]="{}" >Seleccione una opcion</mat-option>
+        <mat-option *ngFor="let courseType of this.courseTypeList " [value]="courseType">
           {{courseType.name}}
-        </mat-option>
-       
+        </mat-option>       
       </mat-select>
       <mat-error *ngIf="this.isInvalid('type')" >      
         {{this.getErrorMessage('type')}}</mat-error>
