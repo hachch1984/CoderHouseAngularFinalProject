@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, delay, finalize, of } from 'rxjs';
+import { Observable, delay, finalize, of, startWith } from 'rxjs';
 import { FormModalYesNoComponent, FormModalYesNoInterface } from 'src/app/shared/componets/form-modal-yes-no/form-modal-yes-no.component';
 import { CourseInterface } from '../../../store/interfaces/CourseInterface';
 import { CourseService } from '../../../store/services/course.service';
@@ -11,25 +11,32 @@ import { FormularioInsertarActualizarComponent } from '../formulario-insertar-ac
   templateUrl: './listado-general.component.html',
   styleUrls: ['./listado-general.component.scss']
 })
-export class ListadoGeneralComponent   {
- 
-  constructor(public dialog: MatDialog, public courseService: CourseService) { }
-  
-  loadingDefaultRows = true;
+export class ListadoGeneralComponent implements OnInit {
+
+
   columnNames = ['index', 'name', 'type', 'description', 'actions'];
- 
-  observableGetCourseList =this.courseService.course_getList()
-  .pipe(
-    delay(2000),
-    finalize(() => {
-      this.loadingDefaultRows = false;
-    })
-  );
+  observable_course_getList = new Observable<CourseInterface[]>();
+
+
+  constructor(public dialog: MatDialog, public courseService: CourseService) { }
+  ngOnInit(): void {
+    this.loadingData = true;
+    this.refresh_observable_course_getList();
+  }
 
 
 
-  refreshObservableGetCourseList(): void {
-    //this.observableGetCourseList = of(this.courseService.course_getList());
+  loadingData!: boolean;
+
+
+  refresh_observable_course_getList(): void {
+
+    this.observable_course_getList = this.courseService.course_getList()
+      .pipe(
+        finalize(() => {
+          this.loadingData = false;
+        })
+      );
   }
 
 
@@ -42,8 +49,13 @@ export class ListadoGeneralComponent   {
 
     dialogRef.afterClosed().subscribe((result: CourseInterface) => {
       if (result) {
-        this.courseService.course_add(result);
-        this.refreshObservableGetCourseList()
+        this.loadingData = true;
+        this.courseService.course_add(result)
+          .subscribe(result => {
+            if (result.isSuccess) {
+              this.refresh_observable_course_getList();
+            }
+          });
       }
     });
 
@@ -59,8 +71,12 @@ export class ListadoGeneralComponent   {
     dialogRef.afterClosed().subscribe((result: CourseInterface) => {
 
       if (result) {
-        this.courseService.course_update(result);
-        this.refreshObservableGetCourseList()
+        this.loadingData = true;
+        this.courseService.course_update(result).subscribe(result => {
+          if (result.isSuccess) {
+            this.refresh_observable_course_getList();
+          }
+        });
       }
     });
   }
@@ -73,8 +89,13 @@ export class ListadoGeneralComponent   {
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.courseService.course_remove(course);
-        this.refreshObservableGetCourseList()
+        this.loadingData = true;
+        this.courseService.course_remove(course)
+          .subscribe(result => {
+            if (result.isSuccess) {
+              this.refresh_observable_course_getList();
+            }
+          });
       }
     });
 
@@ -89,7 +110,5 @@ export class ListadoGeneralComponent   {
 
 
 }
-function complete(arg0: () => void): ((error: any) => void) | null | undefined {
-  throw new Error('Function not implemented.');
-}
+
 

@@ -9,6 +9,7 @@ export class LayoutComponent {
 
   menuItems: MenuItem[] = [
     { title: 'Cursos', url: '/course', icon: 'menu_book' },
+    {title:'Usuarios',url:'/user',icon:'manage_accounts'},
     { title: 'Estudiantes', url: '/student', icon: 'person' },
     { title: 'Profesores', url: '/teacher', icon: 'school' },
   ];

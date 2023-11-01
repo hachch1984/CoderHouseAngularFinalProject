@@ -1,9 +1,9 @@
-<button mat-raised-button color="primary" (click)="this.bnAgregarCurso_click()"
-    *ngIf="this.loadingDefaultRows===false">Agregar Curso <mat-icon fontIcon="add"></mat-icon> </button>
+<button   mat-raised-button color="primary"
+    (click)="this.bnAgregarCurso_click()">Agregar Curso <mat-icon fontIcon="add"></mat-icon> </button>
 
 <hr>
  
-<table mat-table [dataSource]=" (observableGetCourseList |async ) || [] " class="mat-elevation-z8">
+<table mat-table [dataSource]=" (observable_course_getList |async ) || [] " class="mat-elevation-z8">
 
     <ng-container matColumnDef="index">
         <th mat-header-cell *matHeaderCellDef>#</th>
@@ -45,9 +45,7 @@
     <tr mat-row *matRowDef="let row; columns: columnNames;"></tr>
 </table>
 
-
-<shared-spinner [spinnerText]="'Loading default rows'" *ngIf="this.loadingDefaultRows===true "></shared-spinner>
-
+<shared-spinner [spinnerText]="'Loading default rows'" *ngIf="this.loadingData===true "></shared-spinner>
 
 
 <!-- 

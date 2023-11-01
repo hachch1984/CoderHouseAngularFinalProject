@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CourseInterface } from '../../../store/interfaces/CourseInterface';
 import { CourseTypeInterface } from '../../../store/interfaces/CourseTypeInterface';
@@ -13,13 +13,15 @@ import { CourseService } from '../../../store/services/course.service';
 })
 export class FormularioInsertarActualizarComponent implements OnInit {
 
-  courseTypeList: CourseTypeInterface[] = [];
+
+  observable_courseTypeList = this.courseService.courseType_getList();
+
   title: string = '';
 
   myForm = this.fb.group({
     id: [''],
     name: ['', [Validators.required, Validators.minLength(3)]],
-    type: [{} as CourseTypeInterface, [Validators.required, CourseType_Validator(this.courseTypeList)]],
+    type: [{} as CourseTypeInterface, [Validators.required], [CourseType_Validator(this.courseService)]],
     description: ['', [Validators.required, Validators.minLength(3)]],
   });
 
@@ -35,8 +37,10 @@ export class FormularioInsertarActualizarComponent implements OnInit {
   }
 
 
+
+
   ngOnInit(): void {
-    this.courseService.courseType_getList().subscribe((courseTypeList) => this.courseTypeList = courseTypeList);
+
 
     if (!this.data) {
       this.title = 'Crear Curso';

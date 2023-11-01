@@ -11,11 +11,9 @@ export class FormModalYesNoComponent implements OnInit{
   constructor(
     public dialogRef: MatDialogRef<FormModalYesNoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: FormModalYesNoInterface,
-  ) {
-    console.log('constructor - data',data);
+  ) { 
   }
-  ngOnInit(): void {
-    console.log('onInit - data',this.data);
+  ngOnInit(): void { 
   }
 
 

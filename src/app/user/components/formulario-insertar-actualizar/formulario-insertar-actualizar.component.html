@@ -1,0 +1,70 @@
+<form [formGroup]="this.myForm" class="p-3">
+
+
+  <div>
+
+
+    <h2>{{this.title}}</h2>
+
+    <mat-form-field class="w-100">
+      <mat-label>Nombre Completo</mat-label>
+      <input matInput formControlName="fullName">
+      <mat-error *ngIf="this.isInvalid('fullName')">
+        {{this.getErrorMessage('fullName')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+      <mat-label>Correo</mat-label>
+      <input type="email" matInput formControlName="email">
+      <mat-error *ngIf="this.isInvalid('email')">
+        {{this.getErrorMessage('email')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+      <mat-label>Tipo de Usuario </mat-label>
+      <mat-select formControlName="userType">
+        <mat-option [value]="{}">Seleccione una opcion</mat-option>
+        <mat-option *ngFor="let userType of this.userTypeList " [value]="userType">
+          {{userType | titlecase}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="this.isInvalid('userType')">
+        {{this.getErrorMessage('userType')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+      <mat-label>Contraseña</mat-label>
+      <input type="password" matInput formControlName="password" autocomplete="new-password">
+      <mat-error *ngIf="this.isInvalid('password')">
+        {{this.getErrorMessage('password')}}</mat-error>
+    </mat-form-field>
+
+
+
+    <div class="d-flex ">
+      <div  >
+        <h3>Fotografia</h3>
+        <button mat-fab title="Cargar fotografia" (click)="fileUpload.click()"> <mat-icon fontIcon="search"></mat-icon>
+        </button>
+      </div>
+      <user-visualizador-fotografia class="m-auto" [image_base64]="this.image_base64" [width]="250" [height]="270"/>
+      <input class="d-none" type="file" #fileUpload accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+        (change)="this.fileUpload_onChange($event)">
+    </div>
+
+
+
+  </div>
+
+
+
+
+  <div class="d-flex justify-content-between">
+    <button type="submit" mat-raised-button color="primary" class="mr-2" (click)="this.bnAceptar_onClick()">Aceptar
+      <mat-icon fontIcon="done"></mat-icon> </button>
+    <button mat-raised-button color="warn" (click)="this.bnCancelar_onClick()">Cancelar <mat-icon
+        fontIcon="cancel"></mat-icon> </button>
+  </div>
+
+
+</form>
