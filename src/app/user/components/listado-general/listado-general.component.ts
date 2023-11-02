@@ -4,7 +4,7 @@ import { Observable, finalize, startWith } from 'rxjs';
 import { FormModalYesNoComponent, FormModalYesNoInterface } from 'src/app/shared/componets/form-modal-yes-no/form-modal-yes-no.component';
 import { UserInterface } from 'src/app/store/interfaces/UserInterface';
 import { CourseService } from 'src/app/store/services/course.service';
-import { FormularioInsertarActualizarComponent } from '../formulario-insertar-actualizar/formulario-insertar-actualizar.component';
+import { FormularioInsertarActualizarComponent, FormularioInsertarActualizarComponent_Data } from '../formulario-insertar-actualizar/formulario-insertar-actualizar.component';
 
 
 export const ListadoGeneralComponent_UrlName = 'listado-general';
@@ -41,9 +41,12 @@ export class ListadoGeneralComponent implements OnInit {
 
 
   bnAgregarCurso_click(): void {
-
+    const data: FormularioInsertarActualizarComponent_Data = {
+      user:undefined,
+      readOnly:false,
+    };
     const dialogRef = this.dialog.open(FormularioInsertarActualizarComponent, {
-      data: undefined,
+      data 
     });
 
     dialogRef.afterClosed().subscribe((result: UserInterface) => {
@@ -61,10 +64,14 @@ export class ListadoGeneralComponent implements OnInit {
   }
 
 
-  bnEditar_onClick(course: UserInterface): void {
+  bnEditar_onClick(user: UserInterface): void {
 
+    const data: FormularioInsertarActualizarComponent_Data = {
+      user:user,
+      readOnly:false,
+    };
     const dialogRef = this.dialog.open(FormularioInsertarActualizarComponent, {
-      data: course,
+      data ,
     });
 
     dialogRef.afterClosed().subscribe((result: UserInterface) => {
@@ -83,7 +90,7 @@ export class ListadoGeneralComponent implements OnInit {
   }
 
   bnEliminar_onClick(user: UserInterface): void {
-
+ 
     const data: FormModalYesNoInterface = {
       title: 'Una Pregunta',
       message: 'Está seguro que desea eliminar al usuario:<br/><br/>- Nombre completo: ' + user.fullName + '<br/>- Tipo de Usuario: ' + user.userType

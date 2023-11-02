@@ -1,1 +1,14 @@
-<p>reporte-usuarios-por-tipo works!</p>
+<h3>Reporte usuarios por tipo</h3>
+<hr>
+
+
+
+<div class="d-flex"  >
+    <user-reporteUsuarioPorTipo-user-table class="w-50 m-1"  title="Administradores" [usersList]="this.usersAdminList"></user-reporteUsuarioPorTipo-user-table>
+    
+    <user-reporteUsuarioPorTipo-user-table class="w-50 m-1" title="Estudiantes" [usersList]="this.usersStudentList"></user-reporteUsuarioPorTipo-user-table>
+</div>
+
+<shared-spinner [spinnerText]="'Loading default rows'" *ngIf="this.loadingData===true "></shared-spinner>
+
+

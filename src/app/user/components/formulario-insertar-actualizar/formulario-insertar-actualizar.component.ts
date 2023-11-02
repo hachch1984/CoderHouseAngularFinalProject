@@ -8,6 +8,12 @@ import { UserTypeEnum } from 'src/app/store/interfaces/UserTypeEnum';
 import { CourseService } from 'src/app/store/services/course.service';
 import { EmailExists_Validator } from '../../validators/EmailExists_Validator';
 
+
+export interface FormularioInsertarActualizarComponent_Data {
+  user: UserInterface | undefined,
+  readOnly: boolean,
+}
+
 @Component({
   selector: 'user-formulario-insertar-actualizar',
   templateUrl: './formulario-insertar-actualizar.component.html',
@@ -15,7 +21,7 @@ import { EmailExists_Validator } from '../../validators/EmailExists_Validator';
 })
 export class FormularioInsertarActualizarComponent implements OnInit {
 
-  image_base64: string = '';
+  image_base64: string |undefined;
   userTypeList: UserTypeEnum[] = [];
   title: string = '';
   myForm = this.fb.group(
@@ -34,7 +40,7 @@ export class FormularioInsertarActualizarComponent implements OnInit {
     private courseService: CourseService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<FormularioInsertarActualizarComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: UserInterface,) {
+    @Inject(MAT_DIALOG_DATA) public data: FormularioInsertarActualizarComponent_Data,) {
 
   }
 
@@ -43,11 +49,15 @@ export class FormularioInsertarActualizarComponent implements OnInit {
 
     this.courseService.userType_getList().subscribe((userTypeList) => this.userTypeList = userTypeList);
 
-    if (this.data === undefined) {
+    if (this.data.user === undefined) {
       this.title = 'Crear Usuario';
     } else {
       this.title = "Editar Usuario"
-      this.myForm.patchValue(this.data);
+      this.myForm.patchValue(this.data.user);
+      this.image_base64 = this.data.user.photoBase64;
+    }
+    if (this.data.readOnly) {
+      this.title = "Detalles del usuario";
     }
 
 
@@ -83,13 +93,13 @@ export class FormularioInsertarActualizarComponent implements OnInit {
 
     if (this.myForm.invalid) return;
 
-    let course = this.myForm.value as UserInterface;
+    let user = this.myForm.value as UserInterface;
 
-    if (!course.id) {
-      course.id = new Date().toString();
+    if (!user.id) {
+      user.id = new Date().toString();
     }
 
-    this.dialogRef.close(course);
+    this.dialogRef.close(user);
   }
 
   bnCancelar_onClick(): void {
@@ -108,6 +118,9 @@ export class FormularioInsertarActualizarComponent implements OnInit {
     });
   }
 
+  getPhotoBase64():string|null|undefined  {
+   return this.myForm.get('photoBase64')?.value;
+  }
 
   convertFile(file: File): Observable<string> {
     const result = new ReplaySubject<string>(1);

@@ -9,12 +9,13 @@ import { FormularioInsertarActualizarComponent } from './components/formulario-i
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReporteUsuariosPorTipoComponent } from './components/reporte-usuarios-por-tipo/reporte-usuarios-por-tipo.component';
 import { VisualizadorFotografiaComponent } from './components/visualizador-fotografia/visualizador-fotografia.component';
+import { UserTableComponent } from './components/reporte-usuarios-por-tipo/user-table/user-table.component';
 
 export const User_UrlName='user';
 
 @NgModule({
   declarations: [   
-    MainLayoutComponent, ListadoGeneralComponent, FormularioInsertarActualizarComponent, ReporteUsuariosPorTipoComponent, VisualizadorFotografiaComponent
+    MainLayoutComponent, ListadoGeneralComponent, FormularioInsertarActualizarComponent, ReporteUsuariosPorTipoComponent, VisualizadorFotografiaComponent, UserTableComponent
   ],
   imports: [
     CommonModule,

@@ -23,7 +23,7 @@ export class CourseService {
 
   private userTypeList: UserTypeEnum[] = [UserTypeEnum.admin, UserTypeEnum.student];
   public userType_getList(): Observable<UserTypeEnum[]> {
-    return of([...this.userTypeList]);
+    return of([...this.userTypeList].sort((a, b) => a.localeCompare(b)));
   }
 
 
@@ -117,7 +117,7 @@ export class CourseService {
     ];
   }
   public user_getList(): Observable<UserInterface[]> {
-    return of([...this.userList]);
+    return of([...this.userList].sort((a, b) => a.fullName.localeCompare(b.fullName)));
   }
   public user_existsEmail(id: string, email: string): Observable<boolean> {
      

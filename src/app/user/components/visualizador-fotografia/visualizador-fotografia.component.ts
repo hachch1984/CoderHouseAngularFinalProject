@@ -15,7 +15,7 @@ export class VisualizadorFotografiaComponent {
 
 
   @Input()
-  image_base64='';
+  image_base64:string | undefined|null;
   @Input()
   width = 200;
   @Input()
