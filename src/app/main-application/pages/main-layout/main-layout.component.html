@@ -8,8 +8,10 @@
       </button>
     </mat-toolbar>
 
+ 
     <mat-nav-list>
-      <a mat-list-item   *ngFor="let menuItem of this.menuItems"    [routerLink]="menuItem.url"     >  <mat-icon   matListItemIcon [fontIcon] ="menuItem.icon"></mat-icon>  {{ menuItem.title }}</a>
+      <a mat-list-item *ngFor="let menuItem of this.menuItems" [routerLink]="menuItem.url"> <mat-icon matListItemIcon
+          [fontIcon]="menuItem.icon"></mat-icon> {{ menuItem.title }}</a>
     </mat-nav-list>
 
 
@@ -17,7 +19,7 @@
 
   <div class="d-flex flex-column h-100  ">
 
-    <mat-toolbar color="primary"  class="d-flex justify-content-between" >
+    <mat-toolbar color="primary" class="d-flex justify-content-between">
 
       <button mat-icon-button extended aria-label="Show main menu" title="Show main menu" (click)="drawer.toggle()">
         <mat-icon fontIcon="menu"></mat-icon>
@@ -26,8 +28,8 @@
       <span>My App - Henry Chavez</span>
 
 
-     
-      <button mat-button aria-label="Login" title="Login">        
+
+      <button mat-button aria-label="Login" title="Login">
         <mat-icon fontIcon="account_circle"></mat-icon>
         Login
       </button>

@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Course_UrlName } from './course/course.module';
-import { Student_UrlName } from './student/student.module';
-import { Teacher_UrlName } from './teacher/teacher.module';
-import { User_UrlName } from './user/user.module';
+import { MainApplication_UrlName } from './main-application/main-application.module';
 
 const routes: Routes = [
 
-  { path: Course_UrlName, loadChildren: () => import('./course/course.module').then(m => m.CourseModule) },
-  {path:User_UrlName, loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
-  { path: Student_UrlName, loadChildren: () => import('./student/student.module').then(m => m.StudentModule) },
-  { path: Teacher_UrlName, loadChildren: () => import('./teacher/teacher.module').then(m => m.TeacherModule) },
+  {
+    path: MainApplication_UrlName,
+    loadChildren: () => import('./main-application/main-application.module').then(m => m.MainApplicationModule),
+  },
+  {
+    path: '',
+    redirectTo: MainApplication_UrlName,
+    pathMatch: 'full'
+  }
+
 
 ];
 

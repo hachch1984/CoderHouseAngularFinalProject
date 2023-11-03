@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable, ReplaySubject } from 'rxjs';
 import { UserInterface } from 'src/app/store/interfaces/UserInterface';
 import { UserTypeEnum } from 'src/app/store/interfaces/UserTypeEnum';
@@ -14,8 +13,7 @@ export interface FormularioInsertarActualizarComponent_Data {
   readOnly: boolean,
 }
 
-@Component({
-  selector: 'user-formulario-insertar-actualizar',
+@Component({ 
   templateUrl: './formulario-insertar-actualizar.component.html',
   styleUrls: ['./formulario-insertar-actualizar.component.scss']
 })

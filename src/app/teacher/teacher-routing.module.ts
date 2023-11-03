@@ -3,9 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutComponent, Teacher_MainLayoutComponent_UrlName } from './pages/main-layout/main-layout.component';
 
 const routes: Routes = [
-  { path: Teacher_MainLayoutComponent_UrlName, component: MainLayoutComponent },
-  { path: '', redirectTo: Teacher_MainLayoutComponent_UrlName, pathMatch: 'full' },
-  { path: '**', redirectTo: Teacher_MainLayoutComponent_UrlName, pathMatch: 'full' }
+  {
+    path: '', 
+    component: MainLayoutComponent,
+    children: [
+      { path: Teacher_MainLayoutComponent_UrlName, component:MainLayoutComponent }, 
+      { path: '**', redirectTo: Teacher_MainLayoutComponent_UrlName}
+    ]
+  },
 ];
 
 @NgModule({

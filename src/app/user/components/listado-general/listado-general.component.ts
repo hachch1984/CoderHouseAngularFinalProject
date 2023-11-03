@@ -5,12 +5,12 @@ import { FormModalYesNoComponent, FormModalYesNoInterface } from 'src/app/shared
 import { UserInterface } from 'src/app/store/interfaces/UserInterface';
 import { CourseService } from 'src/app/store/services/course.service';
 import { FormularioInsertarActualizarComponent, FormularioInsertarActualizarComponent_Data } from '../formulario-insertar-actualizar/formulario-insertar-actualizar.component';
+import { GenerateUrlName } from 'src/app/shared/utilCode/Code';
 
 
-export const ListadoGeneralComponent_UrlName = 'listado-general';
+export const User_ListadoGeneralComponent_UrlName =GenerateUrlName( 'listado-general');
 
-@Component({
-  selector: 'user-listado-general',
+@Component({ 
   templateUrl: './listado-general.component.html',
   styleUrls: ['./listado-general.component.scss']
 })

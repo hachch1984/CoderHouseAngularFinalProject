@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, filter, finalize, map, toArray } from 'rxjs';
+import { GenerateUrlName } from 'src/app/shared/utilCode/Code';
 import { UserInterface } from 'src/app/store/interfaces/UserInterface';
 import { UserTypeEnum } from 'src/app/store/interfaces/UserTypeEnum';
 import { CourseService } from 'src/app/store/services/course.service';
 
 
 
-export const ReporteUsuariosPorTipoComponent_UrlName = 'reporte-usuarios-por-tipo';
+export const User_ReporteUsuariosPorTipoComponent_UrlName =GenerateUrlName( 'reporte-usuarios-por-tipo');
 
 
 @Component({

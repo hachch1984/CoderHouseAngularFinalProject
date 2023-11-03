@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { CourseInterface } from '../interfaces/CourseInterface';
 import { CourseTypeInterface } from '../interfaces/CourseTypeInterface';
-import { Observable, filter, observable, of, switchMap } from 'rxjs';
+import { OperationResultInterface } from '../interfaces/OperationResult';
 import { UserInterface } from '../interfaces/UserInterface';
 import { UserTypeEnum } from '../interfaces/UserTypeEnum';
-import { StudentInterface } from '../interfaces/StudentInterface';
-import { OperationResultInterface } from '../interfaces/OperationResult';
 
 @Injectable({
   providedIn: 'root'

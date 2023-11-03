@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { GenerateUrlName } from 'src/app/shared/utilCode/Code';
 
-export const Course_ReportAgrupadoPorTipoComponent_UrlName='report-agrupado-por-tipo';
+export const Course_ReportAgrupadoPorTipoComponent_UrlName = GenerateUrlName('course-report-agrupado-por-tipo');
 
 @Component({
   templateUrl: './report-agrupado-por-tipo.component.html',

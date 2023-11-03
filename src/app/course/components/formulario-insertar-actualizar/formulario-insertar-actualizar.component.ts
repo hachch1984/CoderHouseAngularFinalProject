@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CourseInterface } from '../../../store/interfaces/CourseInterface';
 import { CourseTypeInterface } from '../../../store/interfaces/CourseTypeInterface';
-import { CourseType_Validator } from '../../validators/CourseType_Validator';
 import { CourseService } from '../../../store/services/course.service';
+import { CourseType_Validator } from '../../validators/CourseType_Validator';
 
 
 @Component({

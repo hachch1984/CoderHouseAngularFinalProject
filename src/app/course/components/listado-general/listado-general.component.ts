@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, delay, finalize, of, startWith } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { FormModalYesNoComponent, FormModalYesNoInterface } from 'src/app/shared/componets/form-modal-yes-no/form-modal-yes-no.component';
+import { GenerateUrlName } from 'src/app/shared/utilCode/Code';
 import { CourseInterface } from '../../../store/interfaces/CourseInterface';
 import { CourseService } from '../../../store/services/course.service';
 import { FormularioInsertarActualizarComponent } from '../formulario-insertar-actualizar/formulario-insertar-actualizar.component';
 
-@Component({
-  selector: 'course-listado-general',
+export const Course_ListadoGeneralComponent_UrlName = GenerateUrlName('course-listado-general');
+
+@Component({ 
   templateUrl: './listado-general.component.html',
   styleUrls: ['./listado-general.component.scss']
 })

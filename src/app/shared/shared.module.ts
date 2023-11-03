@@ -5,8 +5,11 @@ import { FormModalYesNoComponent } from './componets/form-modal-yes-no/form-moda
 import { TitleType01Directive } from './directives/title-type01.directive';
 import { PascalCaseWithEndPoint } from './pipes/pascal-case-with-end-point.pipe';
  
+import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { SpinnerComponent } from './componets/spinner/spinner.component';
+ 
+ 
  
 
 
@@ -15,18 +18,22 @@ import { SpinnerComponent } from './componets/spinner/spinner.component';
     FormModalYesNoComponent,
     PascalCaseWithEndPoint,
     TitleType01Directive,
-    SpinnerComponent, 
+    SpinnerComponent,   
   ],
   imports: [
+    RouterModule,
     CommonModule,
-     AngularMaterialModule,
+     AngularMaterialModule, 
   ],
   exports:[
+    RouterModule,
+    CommonModule,
     PascalCaseWithEndPoint,
     FormModalYesNoComponent,
     TitleType01Directive,
     AngularMaterialModule,
-    SpinnerComponent,
+    SpinnerComponent,  
   ], 
+  
 })
 export class SharedModule { }
