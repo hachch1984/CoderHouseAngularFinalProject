@@ -1,0 +1,7 @@
+<span class="text-white" matSnackBarLabel>
+    {{this.snackBarRef!.instance.data}}
+</span>
+<span matSnackBarActions>
+    <button mat-button matSnackBarAction (click)="snackBarRef.dismissWithAction()"><mat-icon
+            [fontIcon]="'home'"></mat-icon></button>
+</span>

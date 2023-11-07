@@ -13,11 +13,11 @@
 
 
     <mat-form-field class="w-100">
-      <mat-label>Tipo de Curso  </mat-label>
-      <mat-select formControlName="type">
+      <mat-label>Area </mat-label>
+      <mat-select formControlName="area">
         <mat-option  [value]="{}" >Seleccione una opcion</mat-option>
-        <mat-option *ngFor="let courseType of this.observable_courseTypeList | async " [value]="courseType">
-          {{courseType.name}}
+        <mat-option *ngFor="let area of this.observable_areaList | async " [value]="area">
+          {{area.name}}
         </mat-option>       
       </mat-select>
       <mat-error *ngIf="this.isInvalid('type')" >      

@@ -1,8 +1,9 @@
-import { CourseTypeInterface } from "./CourseTypeInterface";
+import { AreaInterface } from "./AreaInterface";
 
 export interface CourseInterface {
     id?: string,
     name: string,
-    type: CourseTypeInterface,
+    area_id:string,
+    area: AreaInterface|undefined|null,
     description: string,
 }

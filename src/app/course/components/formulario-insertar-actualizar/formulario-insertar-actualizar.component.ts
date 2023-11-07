@@ -2,9 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CourseInterface } from '../../../store/interfaces/CourseInterface';
-import { CourseTypeInterface } from '../../../store/interfaces/CourseTypeInterface';
+import { AreaInterface } from '../../../store/interfaces/AreaInterface';
 import { CourseService } from '../../../store/services/course.service';
 import { CourseType_Validator } from '../../validators/CourseType_Validator';
+import { tap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarErrorComponent } from 'src/app/shared/componets/snackbar-error/snackbar-error.component';
+import { OperationResultInterface } from 'src/app/store/interfaces/OperationResult';
 
 
 @Component({
@@ -14,19 +18,21 @@ import { CourseType_Validator } from '../../validators/CourseType_Validator';
 export class FormularioInsertarActualizarComponent implements OnInit {
 
 
-  observable_courseTypeList = this.courseService.courseType_getList();
+
+  observable_areaList = this.courseService.area_getList();
 
   title: string = '';
 
   myForm = this.fb.group({
     id: [''],
     name: ['', [Validators.required, Validators.minLength(3)]],
-    type: [{} as CourseTypeInterface, [Validators.required], [CourseType_Validator(this.courseService)]],
+    area: [{} as AreaInterface, [Validators.required], [CourseType_Validator(this.courseService)]],
     description: ['', [Validators.required, Validators.minLength(3)]],
   });
 
 
   constructor(
+    private snackBar: MatSnackBar,
     private courseService: CourseService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<FormularioInsertarActualizarComponent>,
@@ -36,7 +42,10 @@ export class FormularioInsertarActualizarComponent implements OnInit {
 
   }
 
-
+  openSnackBar(message: string) {
+    
+    this.snackBar.open(message, undefined, { duration: 3 * 1000, data: true });
+  }
 
 
   ngOnInit(): void {
@@ -79,19 +88,33 @@ export class FormularioInsertarActualizarComponent implements OnInit {
   }
 
 
+
+  resultAction(result: OperationResultInterface): void {
+    this.openSnackBar(result.message);
+
+    if (result.isSuccess) {
+      this.dialogRef.close(true)
+    }
+  }
+
   bnAceptar_onClick(): void {
 
     this.myForm.markAllAsTouched();
 
-    if (this.myForm.invalid) return;
+    if (this.myForm.invalid) {return;}
 
     let course = this.myForm.value as CourseInterface;
 
     if (!course.id) {
-      course.id = new Date().toString();
+      this.courseService
+        .course_add(course)
+        .subscribe(result => this.resultAction(result));
+    } else {
+      this.courseService
+        .course_update(course)
+        .subscribe(result => this.resultAction(result));
     }
-
-    this.dialogRef.close(course);
+ 
   }
 
   bnCancelar_onClick(): void {

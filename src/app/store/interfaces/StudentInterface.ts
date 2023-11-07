@@ -1,8 +1,11 @@
-import { CourseRoutingModule } from "src/app/course/course-routing.module";
+import { CourseInterface } from "./CourseInterface";
 import { UserInterface } from "./UserInterface";
 
 //relacion entre usuario y curso
 export interface StudentInterface {
-    course_id:CourseRoutingModule,
-    user_id:UserInterface,
+    id?: string,
+    course_id: string,
+    course: CourseInterface | undefined|null,
+    user_id: string,
+    user: UserInterface | undefined|null,
 }

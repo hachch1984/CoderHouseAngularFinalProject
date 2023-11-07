@@ -1,1 +1,91 @@
-<p>listado-general works!</p>
+<h3>Estudiantes</h3>
+
+<hr>
+
+
+<form [formGroup]="this.myForm">
+    <button mat-raised-button   color="primary" (click)="this.bnAgregar_onClick()">
+        <mat-icon fontIcon="add"></mat-icon>Agregar Estudiante
+    </button>
+    <hr>
+    <mat-form-field class="w-100">
+        <mat-label>Area </mat-label>
+        <mat-select formControlName="areaId">
+            <mat-option *ngFor="let area of this.observable_areaList | async " [value]="area.id">
+                {{area.name| titlecase}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+        <mat-label>Curso </mat-label>
+        <mat-select formControlName="courseId">
+            <mat-option *ngFor="let course of this.observable_courseList | async " [value]="course.id">
+                {{course.name| titlecase}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+        <mat-label>Nombre Completo</mat-label>
+        <input formControlName="fullName" matInput  (keyup)="this.fullName_onKeyup($event)" >
+    </mat-form-field>
+    <button mat-raised-button   color="warn" (click)="this.bnBuscar_onClick()">
+        <mat-icon fontIcon="search"></mat-icon>Buscar
+    </button>
+</form>
+
+<hr>
+<table mat-table [dataSource]=" (this.observable_studentList | async) || [] " class="mat-elevation-z8">
+
+    <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let element, let index=index;"> {{index+1}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="area">
+        <th mat-header-cell *matHeaderCellDef> Area </th>
+        <td mat-cell *matCellDef="let element"> {{element.area.name | pascalCaseWithEndPoint}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="course">
+        <th mat-header-cell *matHeaderCellDef> Curso </th>
+        <td mat-cell *matCellDef="let element"> {{element.course.name | pascalCaseWithEndPoint}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef> Alumno </th>
+        <td mat-cell *matCellDef="let element"> {{element.fullName| pascalCaseWithEndPoint}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="picture">
+        <th mat-header-cell *matHeaderCellDef> Fotografia </th>
+        <td mat-cell *matCellDef="let element " class="text-center">
+            <!-- <user-visualizador-fotografia 
+                
+                [image_base64]="element.user.photoBase64" 
+                [width]="130" 
+                [height]="150"></user-visualizador-fotografia> -->
+
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let element ">
+            <div class="d-flex justify-content-around align-items-center">
+                <button mat-icon-button [title]="'Editar: '+element.name" color="primary"
+                    (click)="this.bnEditar_onClick(element)">
+                    <mat-icon fontIcon="edit"></mat-icon>
+                </button>
+                <button mat-icon-button [title]="'Eliminar: '+element.name" color="warn"
+                    (click)="this.bnEliminar_onClick(element)">
+                    <mat-icon fontIcon="delete"></mat-icon>
+                </button>
+            </div>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnNames;"></tr>
+</table>

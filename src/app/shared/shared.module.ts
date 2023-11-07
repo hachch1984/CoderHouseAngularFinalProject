@@ -8,6 +8,9 @@ import { PascalCaseWithEndPoint } from './pipes/pascal-case-with-end-point.pipe'
 import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { SpinnerComponent } from './componets/spinner/spinner.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+import { VisualizadorFotografiaComponent } from './componets/visualizador-fotografia/visualizador-fotografia.component';
+import { SnackbarErrorComponent } from './componets/snackbar-error/snackbar-error.component';
  
  
  
@@ -19,6 +22,7 @@ import { SpinnerComponent } from './componets/spinner/spinner.component';
     PascalCaseWithEndPoint,
     TitleType01Directive,
     SpinnerComponent,   
+    VisualizadorFotografiaComponent, SnackbarErrorComponent,
   ],
   imports: [
     RouterModule,
@@ -32,7 +36,11 @@ import { SpinnerComponent } from './componets/spinner/spinner.component';
     FormModalYesNoComponent,
     TitleType01Directive,
     AngularMaterialModule,
-    SpinnerComponent,  
+    SpinnerComponent, 
+    ReactiveFormsModule, 
+    VisualizadorFotografiaComponent,
+    FormsModule,
+    SnackbarErrorComponent,
   ], 
   
 })
