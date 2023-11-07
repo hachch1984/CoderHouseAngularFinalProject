@@ -1,57 +1,71 @@
-<form [formGroup]="this.myForm" class="p-2 d-flex flex-column">
+<form [formGroup]="this.myForm" 
+    class="p-2 d-flex flex-column"
+    [ngClass]=" this.esNuevoEstudiante?'form_big':'form_short'">
     <div>
         <h2>{{this.title}}</h2>
 
         <mat-form-field class="w-100">
             <mat-label>Area </mat-label>
             <mat-select formControlName="area">
-                <mat-option *ngFor="let area of this.observable_areaList | async " [value]="area">
+                <mat-option *ngFor="let area of this.areaList " [value]="area">
                     {{area.name}}
                 </mat-option>
             </mat-select>
-            <mat-error *ngIf="this.isInvalid('type')">
-                {{this.getErrorMessage('type')}}</mat-error>
+            <mat-error *ngIf="this.isInvalid('area')">
+                {{this.getErrorMessage('area')}}</mat-error>
         </mat-form-field>
 
 
         <mat-form-field class="w-100">
             <mat-label>Curso </mat-label>
             <mat-select formControlName="course">
-                <mat-option *ngFor="let area of this.observable_courseList | async " [value]="area">
+                <mat-option *ngFor="let area of this.courseList  " [value]="area">
                     {{area.name}}
                 </mat-option>
             </mat-select>
-            <mat-error *ngIf="this.isInvalid('type')">
-                {{this.getErrorMessage('type')}}</mat-error>
+            <mat-error *ngIf="this.isInvalid('course')">
+                {{this.getErrorMessage('course')}}</mat-error>
         </mat-form-field>
 
     </div>
-
-    <table mat-table [dataSource]="(this.observable_user_getList_onlyStudents |async ) || []"
-        class="mat-elevation-z8 flex-grow-1 mb-2">
-
-        <ng-container matColumnDef="fullName">
-            <th mat-header-cell *matHeaderCellDef> Nombre </th>
-            <td mat-cell *matCellDef="let element, let index=index"> {{ ((index+1)+').- '+ element.fullName)|
-                pascalCaseWithEndPoint}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="picture">
-            <th mat-header-cell *matHeaderCellDef> Fotografia </th>
-            <td mat-cell *matCellDef="let element " class="text-center">
-                <user-visualizador-fotografia [image_base64]="element.photoBase64" [width]="130"
-                    [height]="150"></user-visualizador-fotografia>
-            </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnNames;"></tr>
-    </table>
+ 
+    <mat-form-field class="w-100" *ngIf="this.esNuevoEstudiante===false">
+        <mat-label>Usuario</mat-label>
+        <input matInput formControlName="fullName" readonly="true">
+    </mat-form-field>
 
 
+    <div id="divTable" class="shadow" *ngIf="this.esNuevoEstudiante">
+
+        <table mat-table [dataSource]="(this.observable_user_getList_onlyStudents |async ) || []"
+            class="mat-elevation-z8  demo-table">
+
+            <ng-container matColumnDef="fullName">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element, let index=index"> {{ ((index+1)+').- '+ element.fullName)|
+                    pascalCaseWithEndPoint}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="picture">
+                <th mat-header-cell *matHeaderCellDef> Fotografia </th>
+                <td mat-cell *matCellDef="let element " class="text-center">
+                    <user-visualizador-fotografia [image_base64]="element.photoBase64" [width]="40"
+                        [height]="50"></user-visualizador-fotografia>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnNames;sticky:true "></tr>
+            <tr mat-row *matRowDef="let row; columns: this.columnNames;" (click)="this.row_onClick(row)"
+                [class.demo-row-is-clicked]="this.row_isSelected(row)"></tr>
 
 
+        </table>
 
+
+    </div>
+
+    <mat-error *ngIf="this.isInvalid('user')" class="mb-2">
+        {{this.getErrorMessage('user')}}</mat-error>
 
     <div class="d-flex justify-content-between">
         <button type="submit" mat-raised-button color="primary" class="mr-2" (click)="this.bnAceptar_onClick()">Aceptar

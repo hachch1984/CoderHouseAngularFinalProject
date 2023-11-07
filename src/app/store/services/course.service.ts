@@ -35,21 +35,21 @@ export class CourseService {
   public course_resetList(): void {
     this.courseList = [
       { id: '1', name: 'Autocad', area_id: '1', area: undefined, description: 'Curso de autocad online' },
-      { id: '11', name: 'Inventor', area_id: '1', area: undefined, description: 'Curso de inventor online' },
-      { id: '111', name: 'Civil 3D', area_id: '1', area: undefined, description: 'Curso de civil 3d online' },
+      { id: '2', name: 'Inventor', area_id: '1', area: undefined, description: 'Curso de inventor online' },
+      { id: '3', name: 'Civil 3D', area_id: '1', area: undefined, description: 'Curso de civil 3d online' },
 
-      { id: '2', name: 'Penal', area_id: '2', area: undefined, description: 'especializacion leyes penales' },
-      { id: '22', name: 'Administrativo', area_id: '2', area: undefined, description: 'especializacino en leyes administrativas' },
-      { id: '222', name: 'Procesal', area_id: '2', area: undefined, description: 'especializacion en leyes procesal' },
+      { id: '4', name: 'Penal', area_id: '2', area: undefined, description: 'especializacion leyes penales' },
+      { id: '5', name: 'Administrativo', area_id: '2', area: undefined, description: 'especializacino en leyes administrativas' },
+      { id: '6', name: 'Procesal', area_id: '2', area: undefined, description: 'especializacion en leyes procesal' },
 
-      { id: '3', name: 'Industrial', area_id: '3', area: undefined, description: 'dibujo de tio industrial' },
-      { id: '33', name: 'Coorporativo', area_id: '3', area: undefined, description: 'dibujo de tipo coorporativo' },
-      { id: '333', name: 'Procesos', area_id: '3', area: undefined, description: 'dibujo para procesos' },
+      { id: '7', name: 'Industrial', area_id: '3', area: undefined, description: 'dibujo de tio industrial' },
+      { id: '8', name: 'Coorporativo', area_id: '3', area: undefined, description: 'dibujo de tipo coorporativo' },
+      { id: '9', name: 'Procesos', area_id: '3', area: undefined, description: 'dibujo para procesos' },
 
 
-      { id: '4', name: 'Angular', area_id: '4', area: undefined, description: 'tecnologia angular' },
-      { id: '44', name: 'React', area_id: '4', area: undefined, description: 'tecnologia react' },
-      { id: '4', name: 'C#', area_id: '4', area: undefined, description: 'tecnologia c#' },
+      { id: '10', name: 'Angular', area_id: '4', area: undefined, description: 'tecnologia angular' },
+      { id: '11', name: 'React', area_id: '4', area: undefined, description: 'tecnologia react' },
+      { id: '12', name: 'C#', area_id: '4', area: undefined, description: 'tecnologia c#' },
 
 
     ];
@@ -67,9 +67,10 @@ export class CourseService {
       .sort((a, b) => (a.area!.name! + ' ' + a.name).localeCompare(b.area!.name! + ' ' + b.name)));
   }
   public course_getList_by_areaId(areaId: string): Observable<CourseInterface[]> {
+    let areaListAux = [...this.areaList];
     let arr = [...this.courseList]
-      .filter(x => x.area!.id === areaId)
-      .map(course => ({ ...course, area: this.areaList.find(x => x.id === course.area_id) }))
+      .filter(x => x.area_id === areaId)
+      .map(course => ({ ...course, area: areaListAux.find(x => x.id === course.area_id) }))
       .sort((a, b) => a.name.localeCompare(b.name));
     return of(arr.length > 0 ? arr : []);
   }
@@ -82,7 +83,7 @@ export class CourseService {
       message = 'El nombre del curso ya existe';
     }
     else {
-      this.courseList.push({ ...course, id: uuidv4(), area_id: course.area!.id!, area:undefined });
+      this.courseList.push({ ...course, id: uuidv4(), area_id: course.area!.id!, area: undefined });
       message = 'Curso registrado correctamente';
       isSuccess = true;
     }
@@ -92,7 +93,6 @@ export class CourseService {
       observer.complete();
     });
   }
-
   public course_update(course: CourseInterface): Observable<OperationResultInterface> {
     let isSuccess: boolean;
     let message: string;
@@ -100,10 +100,15 @@ export class CourseService {
     if (this.courseList.find(x => x.id === course.id) === undefined) {
       isSuccess = false;
       message = 'El curso no existe';
-    } else {
+    }
+    else if (this.courseList.find(x => x.id !== course.id && x.area_id === course.area?.id && x.name.toUpperCase() === course.name.toUpperCase()) !== undefined) {
+      isSuccess = false;
+      message = 'El nombre del curso ya existe';
+    }
+    else {
       isSuccess = true;
       message = 'Curso actualizado';
-      this.courseList = this.courseList.map(x => x.id == course.id ? { ...course } : x);
+      this.courseList = this.courseList.map(x => x.id == course.id ? { ...course, area_id: course.area?.id! } : x);
     }
 
     return new Observable<OperationResultInterface>(observer => {
@@ -172,6 +177,70 @@ export class CourseService {
         password: '123',
         photoBase64: ''
       },
+      {
+        id: '3',
+        fullName: 'John Doe',
+        userType: UserTypeEnum.student,
+        email: 'john.doe@email.com',
+        password: '123',
+        photoBase64: ''
+      },
+      {
+        id: '4',
+        fullName: 'Jane Doe',
+        userType: UserTypeEnum.student,
+        email: 'jane.doe@email.com',
+        password: '123',
+        photoBase64: ''
+      },
+      {
+        id: '5',
+        fullName: 'Bob Smith',
+        userType: UserTypeEnum.student,
+        email: 'bob.smith@email.com',
+        password: '123',
+        photoBase64: ''
+      },
+      {
+        id: '6',
+        fullName: 'Alice Johnson',
+        userType: UserTypeEnum.student,
+        email: 'alice.johnson@email.com',
+        password: '123',
+        photoBase64: ''
+      },
+      {
+        id: '7',
+        fullName: 'David Lee',
+        userType: UserTypeEnum.student,
+        email: 'david.lee@email.com',
+        password: '123',
+        photoBase64: ''
+      },
+      {
+        id: '8',
+        fullName: 'Sarah Kim',
+        userType: UserTypeEnum.student,
+        email: 'sarah.kim@email.com',
+        password: '123',
+        photoBase64: ''
+      },
+      {
+        id: '9',
+        fullName: 'Michael Brown',
+        userType: UserTypeEnum.student,
+        email: 'michael.brown@email.com',
+        password: '123',
+        photoBase64: ''
+      },
+      {
+        id: '10',
+        fullName: 'Emily Davis',
+        userType: UserTypeEnum.student,
+        email: 'emily.davis@email.com',
+        password: '123',
+        photoBase64: ''
+      }
     ];
   }
   public user_get_byId(id: string): Observable<UserInterface | undefined> {
@@ -187,7 +256,7 @@ export class CourseService {
         .sort((a, b) => a.fullName.localeCompare(b.fullName))
     );
   }
-  public user_getList_onlyStudents(areaId: string, courseId: string): Observable<UserInterface[]> {
+  public user_getList_onlyStudents(): Observable<UserInterface[]> {
     return of(
       [...this.userList]
         .filter(x => x.userType === UserTypeEnum.student)
@@ -278,19 +347,24 @@ export class CourseService {
 
 
 
-  private studentList: StudentInterface[] = [];
+  private studentList: StudentInterface[] = [
+    { id: '1', course_id: '4', user_id: '1', course: undefined, user: undefined },
+    { id: '2', course_id: '4', user_id: '2', course: undefined, user: undefined },
+    { id: '3', course_id: '2', user_id: '3', course: undefined, user: undefined },
+    { id: '4', course_id: '2', user_id: '4', course: undefined, user: undefined },
+    { id: '5', course_id: '3', user_id: '5', course: undefined, user: undefined },  
+    { id: '5', course_id: '3', user_id: '6', course: undefined, user: undefined },
+    
+
+  ];
   public student_getList(): Observable<StudentInterface[]> {
-    const courseListAux = [...this.courseList];
+    const areaListAux = [...this.areaList];
+    const courseListAux = [...this.courseList].map(x => ({ ...x, area: areaListAux.find(y => y.id === x.area_id) }));
     const userListAux = [...this.userList];
-    return of([...this.studentList])
-      .pipe(
-        map(studentList => studentList.map(student => {
-          const course = courseListAux.find(x => x.id === student.course_id);
-          const user = userListAux.find(x => x.id === student.user_id);
-          student = { ...student, course, user };
-          return student;
-        }))
-      );
+    const studentListAux = [...this.studentList]
+      .map(student => ({ ...student, course: courseListAux.find(x => x.id === student.course_id), user: userListAux.find(x => x.id === student.user_id) }))
+      .sort((a, b) => (a.course?.area?.name + ' ' + a.course?.name + ' ' + a.user?.fullName).localeCompare(b.course?.area?.name + ' ' + b.course?.name + ' ' + b.user?.fullName));
+    return of(studentListAux);
   }
   public student_getList_by_courseId_and_fullName(areaId: string, courseId: string, fullName: string): Observable<StudentInterface[]> {
     return this.student_getList()
@@ -305,35 +379,21 @@ export class CourseService {
       );
   }
   public student_get_byId(id: string): Observable<StudentInterface | undefined> {
-    const courseListAux = [...this.courseList];
-    const userListAux = [...this.userList];
-    const student = [...this.studentList].find(x => x.id === id);
-    if (student) {
-      return of(student)
-        .pipe(
-          map(student => {
-            const course = courseListAux.find(x => x.id === student.course_id);
-            const user = userListAux.find(x => x.id === student.user_id);
-            student = { ...student, course, user };
-            return student;
-          })
-        );
-    }
-    else {
-      return of(undefined);
-    }
+    return this.student_getList().pipe(
+      map(x => x.filter(y => y.id === id)[0])
+    );
   }
   public student_add(student: StudentInterface): Observable<OperationResultInterface> {
     let isSuccess: boolean;
     let message: string;
 
-    if (this.studentList.find(x => x.course_id === student.course_id && x.user_id === student.user_id) !== undefined) {
+    if (this.studentList.find(x => x.course_id === student.course?.id && x.user_id === student.user?.id) !== undefined) {
       isSuccess = false;
       message = 'El usuario ya esta registrado en el curso';
     } else {
       isSuccess = true;
-      message = 'Estudiante registrado correctamente en el curso';
-      this.studentList.push({ ...student, id: uuidv4(), course: undefined, user: undefined });
+      message = 'El usuraio se registro correctamente en el curso';
+      this.studentList.push({ ...student, id: uuidv4(), course_id: student.course?.id!, user_id: student.user?.id!, course: undefined, user: undefined });
     }
 
     return new Observable<OperationResultInterface>(observer => {
@@ -349,13 +409,13 @@ export class CourseService {
       isSuccess = false;
       message = 'El estudiante no existe';
     }
-    else if (this.studentList.find(x => x.course_id === student.course_id && x.user_id === student.user_id) !== undefined) {
+    else if (this.studentList.find(x =>x.id!==student.id && x.course_id === student.course?.id && x.user_id === student.user?.id) !== undefined) {
       isSuccess = false;
       message = 'El usuario ya esta registrado en el curso';
     } else {
       isSuccess = true;
       message = 'Estudiante actualizado correctamente en el curso';
-      this.studentList = this.studentList.map(x => x.id === student.id ? { ...student, course: undefined, user: undefined } : x);
+      this.studentList = this.studentList.map(x => x.id === student.id ? { ...student, course_id: student.course?.id!, user_id: student.user?.id!, course: undefined, user: undefined } : x);
     }
 
     return new Observable<OperationResultInterface>(observer => {

@@ -36,6 +36,9 @@
 </form>
 
 <hr>
+
+ 
+
 <table mat-table [dataSource]=" (this.observable_studentList | async) || [] " class="mat-elevation-z8">
 
     <ng-container matColumnDef="index">
@@ -45,7 +48,7 @@
 
     <ng-container matColumnDef="area">
         <th mat-header-cell *matHeaderCellDef> Area </th>
-        <td mat-cell *matCellDef="let element"> {{element.area.name | pascalCaseWithEndPoint}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.course.area.name | pascalCaseWithEndPoint}} </td>
     </ng-container>
 
     <ng-container matColumnDef="course">
@@ -55,17 +58,17 @@
 
     <ng-container matColumnDef="fullName">
         <th mat-header-cell *matHeaderCellDef> Alumno </th>
-        <td mat-cell *matCellDef="let element"> {{element.fullName| pascalCaseWithEndPoint}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.user.fullName| pascalCaseWithEndPoint}} </td>
     </ng-container>
 
     <ng-container matColumnDef="picture">
         <th mat-header-cell *matHeaderCellDef> Fotografia </th>
         <td mat-cell *matCellDef="let element " class="text-center">
-            <!-- <user-visualizador-fotografia 
+              <user-visualizador-fotografia 
                 
                 [image_base64]="element.user.photoBase64" 
-                [width]="130" 
-                [height]="150"></user-visualizador-fotografia> -->
+                [width]="60" 
+                [height]="70"></user-visualizador-fotografia>  
 
         </td>
     </ng-container>

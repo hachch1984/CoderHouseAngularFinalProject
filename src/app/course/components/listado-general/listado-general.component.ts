@@ -8,6 +8,7 @@ import { OperationResultInterface } from 'src/app/store/interfaces/OperationResu
 import { CourseInterface } from '../../../store/interfaces/CourseInterface';
 import { CourseService } from '../../../store/services/course.service';
 import { FormularioInsertarActualizarComponent } from '../formulario-insertar-actualizar/formulario-insertar-actualizar.component';
+import { StudentInterface } from 'src/app/store/interfaces/StudentInterface';
 
 export const Course_ListadoGeneralComponent_UrlName = GenerateUrlName('course-listado-general');
 
@@ -42,7 +43,7 @@ export class ListadoGeneralComponent implements OnInit {
 
   refresh_observable_course_getList(result?: OperationResultInterface): void {
 
- 
+
 
     if (result) {
       this.openSnackBar(result.message);
@@ -60,9 +61,8 @@ export class ListadoGeneralComponent implements OnInit {
 
 
   bnAgregarCurso_click(): void {
-
     this.dialog
-      .open(FormularioInsertarActualizarComponent, {
+      .open<FormularioInsertarActualizarComponent, CourseInterface, boolean>(FormularioInsertarActualizarComponent, {
         data: undefined,
       })
       .afterClosed()
@@ -72,7 +72,7 @@ export class ListadoGeneralComponent implements OnInit {
 
   bnEditar_onClick(course: CourseInterface): void {
     this.dialog
-      .open(FormularioInsertarActualizarComponent, {
+      .open<FormularioInsertarActualizarComponent, CourseInterface, boolean>(FormularioInsertarActualizarComponent, {
         data: course,
       })
       .afterClosed()
@@ -92,7 +92,7 @@ export class ListadoGeneralComponent implements OnInit {
 
 
     this.dialog
-      .open(FormModalYesNoComponent, { data })
+      .open<FormModalYesNoComponent, FormModalYesNoInterface, boolean>(FormModalYesNoComponent, { data })
       .afterClosed()
       .subscribe(result => {
         if (result) {
@@ -101,8 +101,6 @@ export class ListadoGeneralComponent implements OnInit {
               this.refresh_observable_course_getList(result);
             });
         }
-
-
       });
 
 

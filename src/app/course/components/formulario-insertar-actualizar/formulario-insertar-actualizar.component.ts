@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CourseInterface } from '../../../store/interfaces/CourseInterface';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ObjectIsSelected_Validator } from 'src/app/shared/validator/ObjectisSelected_Validator';
+import { OperationResultInterface } from 'src/app/store/interfaces/OperationResult';
 import { AreaInterface } from '../../../store/interfaces/AreaInterface';
+import { CourseInterface } from '../../../store/interfaces/CourseInterface';
 import { CourseService } from '../../../store/services/course.service';
 import { CourseType_Validator } from '../../validators/CourseType_Validator';
-import { tap } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarErrorComponent } from 'src/app/shared/componets/snackbar-error/snackbar-error.component';
-import { OperationResultInterface } from 'src/app/store/interfaces/OperationResult';
+import { map } from 'rxjs';
 
 
 @Component({
@@ -17,16 +17,22 @@ import { OperationResultInterface } from 'src/app/store/interfaces/OperationResu
 })
 export class FormularioInsertarActualizarComponent implements OnInit {
 
+  objArea_selectOneOption: AreaInterface = { id: '', name: '-- Seleccione un area --' };
 
+  observable_areaList = this.courseService.area_getList().pipe(
+    map(value => {
+      value.unshift(this.objArea_selectOneOption);
 
-  observable_areaList = this.courseService.area_getList();
+      return value;
+    })
+  );
 
   title: string = '';
 
   myForm = this.fb.group({
     id: [''],
     name: ['', [Validators.required, Validators.minLength(3)]],
-    area: [{} as AreaInterface, [Validators.required], [CourseType_Validator(this.courseService)]],
+    area: [this.objArea_selectOneOption, [Validators.required, ObjectIsSelected_Validator], [CourseType_Validator(this.courseService)]],
     description: ['', [Validators.required, Validators.minLength(3)]],
   });
 
@@ -43,16 +49,14 @@ export class FormularioInsertarActualizarComponent implements OnInit {
   }
 
   openSnackBar(message: string) {
-    
     this.snackBar.open(message, undefined, { duration: 3 * 1000, data: true });
   }
 
 
   ngOnInit(): void {
-
-
     if (!this.data) {
       this.title = 'Crear Curso';
+
     }
     else {
       this.title = 'Editar Curso';
@@ -72,6 +76,9 @@ export class FormularioInsertarActualizarComponent implements OnInit {
     const control = this.myForm.get(controlName);
     if (control && control.touched && control.invalid) {
 
+      if (control.hasError('objectIsSelected')) {
+        return control.getError('message');
+      }
       if (control.hasError('required')) {
         return 'Este campo es requerido';
       }
@@ -83,6 +90,7 @@ export class FormularioInsertarActualizarComponent implements OnInit {
       } else if (control.hasError('courseType')) {
         return control.getError('message');
       }
+
     }
     return '';
   }
@@ -101,7 +109,7 @@ export class FormularioInsertarActualizarComponent implements OnInit {
 
     this.myForm.markAllAsTouched();
 
-    if (this.myForm.invalid) {return;}
+    if (this.myForm.invalid) { return; }
 
     let course = this.myForm.value as CourseInterface;
 
@@ -114,7 +122,7 @@ export class FormularioInsertarActualizarComponent implements OnInit {
         .course_update(course)
         .subscribe(result => this.resultAction(result));
     }
- 
+
   }
 
   bnCancelar_onClick(): void {

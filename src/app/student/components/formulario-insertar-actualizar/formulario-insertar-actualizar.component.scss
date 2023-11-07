@@ -1,4 +1,38 @@
-form{
+.form_big {
     width: 700px;
     height: 700px;
+}
+.form_short {
+    width: 700px;
+    height: 350px;
+}
+
+#divTable {
+    overflow-y: auto;
+    flex-grow: 1;
+    margin-bottom: 10px;
+}
+
+
+
+
+
+.demo-table {
+    width: 100%;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+    background-color: rgba(7, 7, 117, 0.5);
+    color:white;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
 }
