@@ -11,6 +11,7 @@ import { SpinnerComponent } from './componets/spinner/spinner.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { VisualizadorFotografiaComponent } from './componets/visualizador-fotografia/visualizador-fotografia.component';
 import { SnackbarErrorComponent } from './componets/snackbar-error/snackbar-error.component';
+import { HttpClientModule } from '@angular/common/http';
  
  
  
@@ -41,6 +42,7 @@ import { SnackbarErrorComponent } from './componets/snackbar-error/snackbar-erro
     VisualizadorFotografiaComponent,
     FormsModule,
     SnackbarErrorComponent,
+    HttpClientModule,
   ], 
   
 })
