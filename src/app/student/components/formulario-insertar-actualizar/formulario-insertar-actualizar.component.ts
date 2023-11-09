@@ -35,7 +35,7 @@ export class FormularioInsertarActualizarComponent implements OnInit {
   });
   columnNames: string[] = ['fullName', 'picture'];
   esNuevoEstudiante = false;
-  observable_user_getList_onlyStudents = this.esNuevoEstudiante ? this.courseService.user_getList_onlyStudents() : new Observable<UserInterface[]>();
+  observable_user_getList_onlyStudents =   this.courseService.user_getList_onlyStudents()  ;
 
 
 
@@ -139,8 +139,9 @@ export class FormularioInsertarActualizarComponent implements OnInit {
 
     if (this.myForm.invalid) { return; }
 
-    let objStudent = this.myForm.value as StudentInterface;
+    let objStudent:StudentInterface = this.myForm.value as StudentInterface;
 
+ 
 
     if (!objStudent.id) {
       this.courseService.student_add(objStudent)

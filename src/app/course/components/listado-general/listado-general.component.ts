@@ -33,22 +33,13 @@ export class ListadoGeneralComponent implements OnInit {
   }
 
 
-  openSnackBar(message: string) {
-    this.snackBar.open(message, undefined, { duration: 3 * 1000, data: true });
-  }
 
 
   loadingData!: boolean;
 
 
   refresh_observable_course_getList(result?: OperationResultInterface): void {
-
-
-
-    if (result) {
-      this.openSnackBar(result.message);
-    }
-
+    this.loadingData = true;
     this.observable_course_getList = this.courseService.course_getList()
       .pipe(
         finalize(() => {
@@ -98,6 +89,7 @@ export class ListadoGeneralComponent implements OnInit {
         if (result) {
           this.courseService.course_remove(course)
             .subscribe(result => {
+              this.snackBar.open(result.message, undefined, { duration: 3 * 1000, data: true });
               this.refresh_observable_course_getList(result);
             });
         }

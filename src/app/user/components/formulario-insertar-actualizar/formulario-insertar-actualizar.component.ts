@@ -6,6 +6,8 @@ import { UserInterface } from 'src/app/store/interfaces/UserInterface';
 import { UserTypeEnum } from 'src/app/store/interfaces/UserTypeEnum';
 import { CourseService } from 'src/app/store/services/course.service';
 import { EmailExists_Validator } from '../../validators/EmailExists_Validator';
+import { OperationResultInterface } from 'src/app/store/interfaces/OperationResult';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 export interface FormularioInsertarActualizarComponent_Data {
@@ -35,6 +37,7 @@ export class FormularioInsertarActualizarComponent implements OnInit {
 
 
   constructor(
+    private snackBar: MatSnackBar,
     private courseService: CourseService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<FormularioInsertarActualizarComponent>,
@@ -85,6 +88,19 @@ export class FormularioInsertarActualizarComponent implements OnInit {
   }
 
 
+  openSnackBar(message: string) {
+    this.snackBar.open(message, undefined, { duration: 3 * 1000, data: true });
+  }
+  
+
+  resultAction(result: OperationResultInterface): void {
+    this.openSnackBar(result.message);
+
+    if (result.isSuccess) {
+      this.dialogRef.close(true)
+    }
+  }
+
   bnAceptar_onClick(): void {
 
     this.myForm.markAllAsTouched();
@@ -94,10 +110,15 @@ export class FormularioInsertarActualizarComponent implements OnInit {
     let user = this.myForm.value as UserInterface;
 
     if (!user.id) {
-      user.id = new Date().toString();
+      this.courseService.user_add(user).subscribe((result) => {
+        this.resultAction(result);
+      })
+    }else{
+      this.courseService.user_update(user).subscribe((result) => {
+        this.resultAction(result);
+      })
     }
-
-    this.dialogRef.close(user);
+ 
   }
 
   bnCancelar_onClick(): void {

@@ -1,13 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, filter, map, of, switchMap, toArray } from 'rxjs';
-import { CourseInterface } from '../interfaces/CourseInterface';
+import { Observable, catchError, map, of, switchMap, tap } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 import { AreaInterface } from '../interfaces/AreaInterface';
+import { CourseInterface } from '../interfaces/CourseInterface';
 import { OperationResultInterface } from '../interfaces/OperationResult';
+import { StudentInterface } from '../interfaces/StudentInterface';
 import { UserInterface } from '../interfaces/UserInterface';
 import { UserTypeEnum } from '../interfaces/UserTypeEnum';
-import { StudentInterface } from '../interfaces/StudentInterface';
-import { v4 as uuidv4 } from 'uuid';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -40,18 +40,23 @@ export class CourseService {
 
 
 
-  public course_get_byId(id: string): Observable<CourseInterface> {
-    return this.http.get<CourseInterface>(`${this.baseUrl}/courses?id=${id}`)
+  public course_get_byId(id: string): Observable<CourseInterface | undefined> {
+    return this.http.get<CourseInterface[]>(`${this.baseUrl}/courses?id=${id}`)
       .pipe(
-        switchMap(course =>
-          this.area_get_byId(course.area_id).pipe(
-            map(area => ({ ...course, area }))
-          )
-        )
+        switchMap(courses => {
+          if (courses.length === 0) {
+            return of(undefined);
+          }
+          else {
+            const course = courses[0];
+            return this.area_get_byId(course.area_id).pipe(
+              map(area => ({ ...course, area }))
+            )
+          }
+        })
       );
   }
   public course_getList(): Observable<CourseInterface[]> {
-
     return this.http.get<CourseInterface[]>(`${this.baseUrl}/courses`)
       .pipe(
         switchMap(courses =>
@@ -83,7 +88,7 @@ export class CourseService {
             return this.returnOperationResult(false, 'El nombre del curso ya existe');
           }
           else {
-            course={...course,area_id:course.area?.id!};
+            course = { ...course, area_id: course.area?.id!, id: uuidv4(), area: undefined };
             return this.http.post<OperationResultInterface>(`${this.baseUrl}/courses`, course)
               .pipe(
                 switchMap(or => this.returnOperationResult(true, 'Curso actualizado correctamente')),
@@ -104,7 +109,7 @@ export class CourseService {
             return this.returnOperationResult(false, 'El nombre del curso ya existe');
           }
           else {
-            course={...course,area_id:course.area?.id!};
+            course = { ...course, area_id: course.area?.id!, area: undefined };
             return this.http.put<OperationResultInterface>(`${this.baseUrl}/courses/${course.id}`, course)
               .pipe(
                 switchMap(or => this.returnOperationResult(true, 'Curso actualizado correctamente')),
@@ -143,13 +148,13 @@ export class CourseService {
       );
   }
   public area_exists(id: string): Observable<boolean> {
-    return this.http.get<AreaInterface>(`${this.baseUrl}/areas?id=${id}`)
+    return this.http.get<AreaInterface[]>(`${this.baseUrl}/areas?id=${id}`)
       .pipe(
-        map(value => value ? true : false)
+        map(value => value.length === 1 ? true : false)
       );
   }
-  public area_get_byId(id: string): Observable<AreaInterface> {
-    return this.http.get<AreaInterface>(`${this.baseUrl}/areas?id=${id}`);
+  public area_get_byId(id: string): Observable<AreaInterface | undefined> {
+    return this.http.get<AreaInterface[]>(`${this.baseUrl}/areas?id=${id}`).pipe(map(arr => arr.length === 1 ? arr[0] : undefined));
   }
 
 
@@ -160,18 +165,21 @@ export class CourseService {
 
 
   public user_get_by_email(email: string): Observable<UserInterface | undefined> {
-    return this.http.get<UserInterface>(`${this.baseUrl}/users?email=${email}`);
+    return this.http.get<UserInterface[]>(`${this.baseUrl}/users?email=${email}`).pipe(map(arr => arr.length === 1 ? arr[0] : undefined));
   }
   public user_get_byId(id: string): Observable<UserInterface | undefined> {
-    return this.http.get<UserInterface>(`${this.baseUrl}/users?id=${id}`);
+    return this.http.get<UserInterface[]>(`${this.baseUrl}/users?id=${id}`).pipe(map(arr => arr.length === 1 ? arr[0] : undefined));
   }
   public user_getList(): Observable<UserInterface[]> {
     return this.http.get<UserInterface[]>(`${this.baseUrl}/users`)
       .pipe(map(users => users.sort((a, b) => a.fullName.localeCompare(b.fullName))));
   }
   public user_getList_onlyStudents(): Observable<UserInterface[]> {
-    return this.http.get<UserInterface[]>(`${this.baseUrl}/users?userType=${UserTypeEnum.student}`)
-      .pipe(map(users => users.sort((a, b) => a.fullName.localeCompare(b.fullName))));
+    return this.http.get<UserInterface[]>(`${this.baseUrl}/users`)
+      .pipe( 
+        map(users => users.sort((a, b) => a.fullName.localeCompare(b.fullName))),
+        
+        );
   }
   public user_getList_byFullName(fullName: string): Observable<UserInterface[]> {
     return this.user_getList()
@@ -188,12 +196,15 @@ export class CourseService {
       );
   }
   public user_add(user: UserInterface): Observable<OperationResultInterface> {
+    
     return this.user_get_by_email(user.email).pipe(
       switchMap(obj => {
-        if (obj) {
+        if (obj) { 
           return this.returnOperationResult(false, 'El email ya esta registrado');
         }
         else {
+          user = { ...user, id: uuidv4() };
+          console.log('user', user);
           return this.http.post<OperationResultInterface>(`${this.baseUrl}/users`, user)
             .pipe(
               switchMap(or => this.returnOperationResult(true, 'Usuario actualizado correctamente')),
@@ -289,7 +300,7 @@ export class CourseService {
           return this.returnOperationResult(false, 'El usuario ya esta registrado en el curso');
         }
         else {
-          student = { ...student, user_id: student.user?.id!, course_id: student.course?.id! }
+          student = { ...student, user_id: student.user?.id!, course_id: student.course?.id!, id: uuidv4(), course: undefined, user: undefined }
           return this.http.post<OperationResultInterface>(`${this.baseUrl}/students`, student)
             .pipe(
               switchMap(or => this.returnOperationResult(true, 'Estudiante registrado correctamente')),
@@ -310,7 +321,7 @@ export class CourseService {
           return this.returnOperationResult(false, 'El usuario ya esta registrado en el curso');
         }
         else {
-          student = { ...student, user_id: student.user?.id!, course_id: student.course?.id! }
+          student = { ...student, user_id: student.user?.id!, course_id: student.course?.id!, course: undefined, user: undefined }
           return this.http.put<OperationResultInterface>(`${this.baseUrl}/students/${student.id}`, student)
             .pipe(
               switchMap(or => this.returnOperationResult(true, 'Estudiante actualizado correctamente')),

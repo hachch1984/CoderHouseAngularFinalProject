@@ -6,6 +6,8 @@ import { UserInterface } from 'src/app/store/interfaces/UserInterface';
 import { CourseService } from 'src/app/store/services/course.service';
 import { FormularioInsertarActualizarComponent, FormularioInsertarActualizarComponent_Data } from '../formulario-insertar-actualizar/formulario-insertar-actualizar.component';
 import { GenerateUrlName } from 'src/app/shared/utilCode/Code';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { OperationResultInterface } from 'src/app/store/interfaces/OperationResult';
 
 
 export const User_ListadoGeneralComponent_UrlName =GenerateUrlName( 'listado-general');
@@ -21,6 +23,7 @@ export class ListadoGeneralComponent implements OnInit {
   observable_user_getList = new Observable<UserInterface[]>();
 
   constructor(
+    private snackBar: MatSnackBar,
     private courseService: CourseService,
     private dialog: MatDialog
   ) { }
@@ -28,6 +31,8 @@ export class ListadoGeneralComponent implements OnInit {
   ngOnInit(): void {
     this.refresh_observable_userGetList();
   }
+
+   
 
   refresh_observable_userGetList(): void {
     this.loadingData = true;
@@ -49,17 +54,7 @@ export class ListadoGeneralComponent implements OnInit {
       data 
     });
 
-    dialogRef.afterClosed().subscribe((result: UserInterface) => {
-      if (result) {
-        this.loadingData = true;
-        this.courseService.user_add(result)
-          .subscribe(result => {
-            if (result.isSuccess) {
-              this.refresh_observable_userGetList();
-            }
-          });
-      }
-    });
+    dialogRef.afterClosed().subscribe( ()=>this.refresh_observable_userGetList());
 
   }
 
@@ -74,19 +69,7 @@ export class ListadoGeneralComponent implements OnInit {
       data ,
     });
 
-    dialogRef.afterClosed().subscribe((result: UserInterface) => {
-
-      if (result) {
-        this.loadingData = true;
-        this.courseService.user_update(result)
-          .subscribe(result => {
-            if (result.isSuccess) {
-              this.refresh_observable_userGetList();
-            }
-          });
-
-      }
-    });
+    dialogRef.afterClosed().subscribe( ()=>this.refresh_observable_userGetList());
   }
 
   bnEliminar_onClick(user: UserInterface): void {
@@ -103,9 +86,9 @@ export class ListadoGeneralComponent implements OnInit {
         this.loadingData = true;
         this.courseService.user_remove(user)
           .subscribe(result => {
-            if (result.isSuccess) {
+            this.snackBar.open(result.message, undefined, { duration: 3 * 1000, data: true });             
               this.refresh_observable_userGetList();
-            }
+            
           });
       }
     });

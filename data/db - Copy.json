@@ -1,0 +1,222 @@
+{
+  "courses": [
+    {
+      "id": "1",
+      "name": "Autocad",
+      "area_id": "1",
+      "area": null,
+      "description": "Curso de autocad online"
+    },
+    {
+      "id": "2",
+      "name": "Inventor",
+      "area_id": "1",
+      "area": null,
+      "description": "Curso de inventor online"
+    },
+    {
+      "id": "3",
+      "name": "Civil 3D",
+      "area_id": "1",
+      "area": null,
+      "description": "Curso de civil 3d online"
+    },
+    {
+      "id": "4",
+      "name": "Penal",
+      "area_id": "2",
+      "area": null,
+      "description": "especializacion leyes penales"
+    },
+    {
+      "id": "5",
+      "name": "Administrativo",
+      "area_id": "2",
+      "area": null,
+      "description": "especializacino en leyes administrativas"
+    },
+    {
+      "id": "6",
+      "name": "Procesal",
+      "area_id": "2",
+      "area": null,
+      "description": "especializacion en leyes procesal"
+    },
+    {
+      "id": "7",
+      "name": "Industrial",
+      "area_id": "3",
+      "area": null,
+      "description": "dibujo de tio industrial"
+    },
+    {
+      "id": "8",
+      "name": "Coorporativo",
+      "area_id": "3",
+      "area": null,
+      "description": "dibujo de tipo coorporativo"
+    },
+    {
+      "id": "9",
+      "name": "Procesos",
+      "area_id": "3",
+      "area": null,
+      "description": "dibujo para procesos"
+    },
+    {
+      "id": "10",
+      "name": "Angular",
+      "area_id": "4",
+      "area": null,
+      "description": "tecnologia angular"
+    },
+    {
+      "id": "11",
+      "name": "React",
+      "area_id": "4",
+      "area": null,
+      "description": "tecnologia react"
+    },
+    {
+      "id": "12",
+      "name": "C#",
+      "area_id": "4",
+      "area": null,
+      "description": "tecnologia c#"
+    }
+  ],
+  "areas": [
+    {
+      "id": "1",
+      "name": "Arquitectura"
+    },
+    {
+      "id": "2",
+      "name": "Derecho"
+    },
+    {
+      "id": "3",
+      "name": "Diseño"
+    },
+    {
+      "id": "4",
+      "name": "Programacion"
+    }
+  ],
+  "users": [
+    {
+      "id": "2",
+      "fullName": "Joel Castro",
+      "userType": "student",
+      "email": "joel.castro@email.com",
+      "password": "123",
+      "photoBase64": ""
+    },
+    {
+      "id": "3",
+      "fullName": "John Doe",
+      "userType": "student",
+      "email": "john.doe@email.com",
+      "password": "123",
+      "photoBase64": ""
+    },
+    {
+      "id": "4",
+      "fullName": "Jane Doe",
+      "userType": "student",
+      "email": "jane.doe@email.com",
+      "password": "123",
+      "photoBase64": ""
+    },
+    {
+      "id": "5",
+      "fullName": "Bob Smith",
+      "userType": "student",
+      "email": "bob.smith@email.com",
+      "password": "123",
+      "photoBase64": ""
+    },
+    {
+      "id": "6",
+      "fullName": "Alice Johnson",
+      "userType": "student",
+      "email": "alice.johnson@email.com",
+      "password": "123",
+      "photoBase64": ""
+    },
+    {
+      "id": "7",
+      "fullName": "David Lee",
+      "userType": "student",
+      "email": "david.lee@email.com",
+      "password": "123",
+      "photoBase64": ""
+    },
+    {
+      "id": "8",
+      "fullName": "Sarah Kim",
+      "userType": "student",
+      "email": "sarah.kim@email.com",
+      "password": "123",
+      "photoBase64": ""
+    },
+    {
+      "id": "9",
+      "fullName": "Michael Brown",
+      "userType": "student",
+      "email": "michael.brown@email.com",
+      "password": "123",
+      "photoBase64": ""
+    },
+    {
+      "id": "10",
+      "fullName": "Emily Davis",
+      "userType": "student",
+      "email": "emily.davis@email.com",
+      "password": "123",
+      "photoBase64": ""
+    }
+  ],
+  "students": [
+  
+    {
+      "id": "2",
+      "course_id": "4",
+      "user_id": "2",
+      "course": null,
+      "user": null
+    },
+    {
+      "id": "3",
+      "course_id": "2",
+      "user_id": "3",
+      "course": null,
+      "user": null
+    },
+    {
+      "id": "4",
+      "course_id": "2",
+      "user_id": "4",
+      "course": null,
+      "user": null
+    },
+    {
+      "id": "5",
+      "course_id": "3",
+      "user_id": "5",
+      "course": null,
+      "user": null
+    },
+    {
+      "id": "5",
+      "course_id": "3",
+      "user_id": "6",
+      "course": null,
+      "user": null
+    }
+  ],
+  "userTypes": [
+    "admin",
+    "student"
+  ]
+}
