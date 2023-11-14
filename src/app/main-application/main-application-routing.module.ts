@@ -24,10 +24,10 @@ const routes: Routes = [
         { path: FormularioAccesoNoAutorizadoComponent_UrlName, component: FormularioAccesoNoAutorizadoComponent },
 
 
-        { path: Course_UrlName, loadChildren: () => import('../course/course.module').then(m => m.CourseModule) , canActivate:guards},
-        { path: User_UrlName, loadChildren: () => import('../user/user.module').then(m => m.UserModule) , canActivate:guards},
-        { path: Student_UrlName, loadChildren: () => import('../student/student.module').then(m => m.StudentModule)   , canActivate:guards},
-        { path: Teacher_UrlName, loadChildren: () => import('../teacher/teacher.module').then(m => m.TeacherModule) , canActivate:[user_isLogged_guard]},
+        // { path: Course_UrlName, loadChildren: () => import('../course/course.module').then(m => m.CourseModule) , canActivate:guards},
+        // { path: User_UrlName, loadChildren: () => import('../user/user.module').then(m => m.UserModule) , canActivate:guards},
+        // { path: Student_UrlName, loadChildren: () => import('../student/student.module').then(m => m.StudentModule)   , canActivate:guards},
+        // { path: Teacher_UrlName, loadChildren: () => import('../teacher/teacher.module').then(m => m.TeacherModule) , canActivate:[user_isLogged_guard]},
 
 
         { path: '**', redirectTo: FormInicialComponent_UrlName }

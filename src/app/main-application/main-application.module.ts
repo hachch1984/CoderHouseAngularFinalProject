@@ -17,7 +17,8 @@ export const MainApplication_UrlName = GenerateUrlName('main-application');
   declarations: [
     MainLayoutComponent,
     FormInicialComponent,
-    FormNoExisteComponent,FormularioLoginComponent, FormularioAccesoNoAutorizadoComponent
+    FormNoExisteComponent,FormularioLoginComponent,
+     FormularioAccesoNoAutorizadoComponent
   ],
   imports: [  
     MainApplicationRoutingModule,
