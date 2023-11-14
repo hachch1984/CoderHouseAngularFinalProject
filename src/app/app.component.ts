@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CourseService } from './store/services/course.service';
 
 @Component({
   selector: 'app-root',
@@ -6,9 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 
 })
-export class AppComponent   {
-  
- 
-}
+export class AppComponent {
 
- 
+  constructor(private courseService: CourseService) {
+  }
+
+
+
+
+  loading() {
+   return  this.courseService.getLoading();
+
+  }
+
+
+}

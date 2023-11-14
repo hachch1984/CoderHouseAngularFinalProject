@@ -28,7 +28,7 @@ export class FormularioInsertarActualizarComponent implements OnInit {
     {
       id: [''],
       fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email], [EmailExists_Validator(this.courseService)]],
+      email: ['', [Validators.required, Validators.email], [ ]],
       userType: ['' as UserTypeEnum, Validators.required],
       password: ['', Validators.required],
       photoBase64: [''],

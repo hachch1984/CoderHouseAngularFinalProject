@@ -16,6 +16,14 @@ export class CourseService {
 
   baseUrl = 'http://localhost:3000';
 
+  private loading: boolean = false;
+  setLoading(loading: boolean) {
+    this.loading = loading;
+  }
+
+  getLoading(): boolean {
+    return this.loading;
+  }
 
 
   constructor(private http: HttpClient) {
@@ -62,7 +70,7 @@ export class CourseService {
 
 
   public userType_getList(): Observable<UserTypeEnum[]> {
-    return this.http.get<UserTypeEnum[]>(`${this.baseUrl}/userTypes`).pipe(
+    return this.http.get<UserTypeEnum[]>(`${this.baseUrl}/userTypes`).pipe(  
       map(arr => arr.sort((a, b) => a.localeCompare(b)))
     );
   }
@@ -234,8 +242,7 @@ export class CourseService {
           return this.returnOperationResult(false, 'El email ya esta registrado');
         }
         else {
-          user = { ...user, id: uuidv4() };
-          console.log('user', user);
+          user = { ...user, id: uuidv4() }; 
           return this.http.post<OperationResultInterface>(`${this.baseUrl}/users`, user)
             .pipe(
               switchMap(or => this.returnOperationResult(true, 'Usuario actualizado correctamente')),
