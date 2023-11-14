@@ -37,12 +37,12 @@ import { HttpClientModule } from '@angular/common/http';
     FormModalYesNoComponent,
     TitleType01Directive,
     AngularMaterialModule,
-    SpinnerComponent, 
-    ReactiveFormsModule, 
+    SpinnerComponent,  
     VisualizadorFotografiaComponent,
     FormsModule,
     SnackbarErrorComponent,
     HttpClientModule,
+    ReactiveFormsModule
   ], 
   
 })

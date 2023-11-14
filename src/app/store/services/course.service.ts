@@ -16,8 +16,39 @@ export class CourseService {
 
   baseUrl = 'http://localhost:3000';
 
+
+
   constructor(private http: HttpClient) {
   }
+
+
+
+  private _user_logged: UserInterface | undefined;
+  public user_isLogged() {
+    return this._user_logged?true:false;
+  }
+  public user_logged() {
+    return { ...this._user_logged };
+  }
+  public user_login(email: string, password: string): Observable<OperationResultInterface> {
+    return this.http.get<UserInterface[]>(`${this.baseUrl}/users?email=${email}&password=${password}`).pipe(
+      map(arr => {
+        let obj = arr.length === 1 ? arr[0] : undefined
+        if (obj) {        
+          this._user_logged = obj;
+          return { isSuccess: true, message: 'Usuario logueado correctamente' };
+        } else {
+          return { isSuccess: false, message: 'Usuario o contraseña incorrectos' };
+        }
+
+      })
+    );
+  }
+  public user_logout() { 
+    this._user_logged = undefined;
+  }
+
+
 
 
   private returnOperationResult(isSuccess: boolean, message: string): Observable<OperationResultInterface> {
@@ -176,10 +207,10 @@ export class CourseService {
   }
   public user_getList_onlyStudents(): Observable<UserInterface[]> {
     return this.http.get<UserInterface[]>(`${this.baseUrl}/users`)
-      .pipe( 
+      .pipe(
         map(users => users.sort((a, b) => a.fullName.localeCompare(b.fullName))),
-        
-        );
+
+      );
   }
   public user_getList_byFullName(fullName: string): Observable<UserInterface[]> {
     return this.user_getList()
@@ -196,10 +227,10 @@ export class CourseService {
       );
   }
   public user_add(user: UserInterface): Observable<OperationResultInterface> {
-    
+
     return this.user_get_by_email(user.email).pipe(
       switchMap(obj => {
-        if (obj) { 
+        if (obj) {
           return this.returnOperationResult(false, 'El email ya esta registrado');
         }
         else {

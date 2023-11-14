@@ -1,0 +1,49 @@
+<form [formGroup]="this.myForm" autocomplete="off">
+
+    <h2>Identificacion de usuario</h2>
+
+    <mat-form-field class="w-100">
+        <mat-label>Email </mat-label>
+        <input matInput type="email" formControlName="email">
+        <mat-error *ngIf="this.isInvalid('email')">
+            {{this.getErrorMessage('email')}}</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field class="w-100">
+        <mat-label>Password </mat-label>
+        <input matInput type="password" formControlName="password" autocomplete="off">
+        <mat-error *ngIf="this.isInvalid('password')">
+            {{this.getErrorMessage('password')}}</mat-error>
+    </mat-form-field>
+
+
+
+
+    <div class="d-flex justify-content-between">
+        <button type="submit" mat-raised-button color="primary" class="mr-2" (click)="this.bnAceptar_onClick()">Aceptar
+            <mat-icon fontIcon="done"></mat-icon> </button>
+        <button mat-raised-button color="warn" (click)="this.bnCancelar_onClick()">Cancelar <mat-icon
+                fontIcon="cancel"></mat-icon> </button>
+    </div>
+
+
+    <div class="mt-5 text-black-50">
+        <hr>
+        <h4 class="text-center">Accesos de ejemplo</h4>
+        <hr>
+        <p>usuario administrador <br>- email: henry@email.com<br>- password: 123</p>
+        <div class="text-end">
+            <button class="btn btn-secondary" (click)="this.bnAsignar1_onClick()">Asignar</button>
+        </div>
+       
+        <hr>
+        <p>usuario estudiante <br>- email: emily.davis@email.com<br>- password: 123</p>
+        <div class="text-end">
+            <button class="btn btn-secondary" (click)="this.bnAsignar2_onClick()">Asignar</button>
+        </div>
+        <hr>
+    </div>
+
+
+</form>
