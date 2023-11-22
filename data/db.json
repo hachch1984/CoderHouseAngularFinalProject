@@ -83,6 +83,12 @@
       "area_id": "4",
       "area": null,
       "description": "tecnologia c#"
+    },
+    {
+      "id": "7f1adae6-9216-4dcf-88fc-2753b1b38bfe",
+      "name": "dibujo a lapiz",
+      "description": "ssssssss",
+      "area_id": "1"
     }
   ],
   "areas": [
@@ -242,6 +248,46 @@
       },
       "course_id": "10",
       "user_id": "b5828ed7-f561-4660-b459-504da4fd44db"
+    },
+    {
+      "id": "2e9c499d-1c59-4895-9d16-81998cd49cfa",
+      "area": {
+        "id": "1",
+        "name": "Arquitectura"
+      },
+      "course_id": "3",
+      "user_id": "4",
+      "fullName": ""
+    },
+    {
+      "id": "55d6a303-29a4-4668-96b0-beb8890c22b4",
+      "area": {
+        "id": "2",
+        "name": "Derecho"
+      },
+      "course_id": "4",
+      "user_id": "5",
+      "fullName": ""
+    },
+    {
+      "id": "0a57b733-0062-4b53-9b0a-402ee4add5db",
+      "area": {
+        "id": "1",
+        "name": "Arquitectura"
+      },
+      "course_id": "1",
+      "user_id": "10",
+      "fullName": ""
+    },
+    {
+      "id": "49f38b13-7f9e-472f-9089-c7fa50dc60d7",
+      "area": {
+        "id": "2",
+        "name": "Derecho"
+      },
+      "course_id": "4",
+      "user_id": "10",
+      "fullName": ""
     }
   ],
   "userTypes": [

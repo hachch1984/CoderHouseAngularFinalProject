@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { GenerateUrl } from 'src/app/shared/utilCode/Code';
 import { CourseService } from 'src/app/store/services/course.service';
 import { MainApplication_UrlName } from '../../main-application.module';
+import { Store } from '@ngrx/store';
+import { CourseActions } from 'src/app/store/services/redux/CourseAction';
+import { selectorCourseState } from 'src/app/store/services/redux/CourseSelector';
+import { Subscription } from 'rxjs';
 
 
 export const FormularioLoginComponent_UrlName: string = 'formulario-login';
@@ -14,16 +18,29 @@ export const FormularioLoginComponent_UrlName: string = 'formulario-login';
   templateUrl: './formulario-login.component.html',
   styleUrls: ['./formulario-login.component.scss']
 })
-export class FormularioLoginComponent {
-
-
+export class FormularioLoginComponent implements OnDestroy {
+ 
 
   constructor(
+    private store: Store,
     private snackBar: MatSnackBar,
     private sb: FormBuilder,
-    private courseService: CourseService,
     private router: Router
-  ) { }
+  ) {
+      this.store.select(selectorCourseState).subscribe((state) => {
+
+      if (state.operationResult.message) {
+        this.openSnackBar(state.operationResult.message);
+        if (state.operationResult.isSuccess) {
+         this.bnCancelar_onClick()
+        }
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    
+  }
 
 
   myForm = this.sb.group({
@@ -53,6 +70,8 @@ export class FormularioLoginComponent {
   openSnackBar(message: string) {
     this.snackBar.open(message, undefined, { duration: 3 * 1000, data: true });
   }
+
+
   bnAceptar_onClick() {
 
     this.myForm.markAllAsTouched();
@@ -61,17 +80,12 @@ export class FormularioLoginComponent {
     let email = this.myForm.value.email!;
     let password = this.myForm.value.password!;
 
-    this.courseService.user_login(email, password).subscribe(
-      (operationResult) => {
-        this.openSnackBar(operationResult.message);
-        if (operationResult.isSuccess) {
-          this.bnCancelar_onClick();
-        }
-      }
-    );
+    this.store.dispatch(CourseActions.login({ email, password }));
+
+
   }
 
-  bnCancelar_onClick() {
+  bnCancelar_onClick() { 
     this.router.navigate([GenerateUrl(MainApplication_UrlName)]);
   }
 

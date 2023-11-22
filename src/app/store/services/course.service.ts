@@ -295,6 +295,14 @@ export class CourseService {
 
 
 
+
+  public student_getCourses (user_id:string): Observable<CourseInterface[]> {
+    return this.student_getList().pipe(
+      map(students => students.filter(x => x.user_id === user_id).map(x => x.course!).sort((a, b) => (a.area!.name+' '+a.name).localeCompare(b.area!.name+' '+b.name)))
+    );
+   // return this.course_getList();
+  } 
+
   public student_getList(): Observable<StudentInterface[]> {
     return this.http.get<StudentInterface[]>(`${this.baseUrl}/students`).pipe(
       switchMap(students => {

@@ -9,6 +9,10 @@ import { Teacher_UrlName } from 'src/app/teacher/teacher.module';
 import { User_UrlName } from 'src/app/user/user.module';
 import { FormularioLoginComponent_UrlName } from '../../components/formulario-login/formulario-login.component';
 import { MainApplication_UrlName } from '../../main-application.module';
+import { Store } from '@ngrx/store';
+import { selectorCourseState } from 'src/app/store/services/redux/CourseSelector';
+import { UserInterface } from 'src/app/store/interfaces/UserInterface';
+import { CourseActions } from 'src/app/store/services/redux/CourseAction';
 
 
 
@@ -18,14 +22,14 @@ export const MainLayoutComponent_UrlName: string = 'main-layout';
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss']
 })
-export class MainLayoutComponent  {
+export class MainLayoutComponent {
 
   getMenuItems() {
     let menuItems: MenuItem[] = [];
     if (this.user_isLogged()) {
 
       if (this.user_logged()?.userType === UserTypeEnum.admin) {
-         
+
         menuItems = [
           { title: 'Usuarios', url: User_UrlName, icon: 'manage_accounts' },
           { title: 'Cursos', url: Course_UrlName, icon: 'menu_book' },
@@ -33,37 +37,51 @@ export class MainLayoutComponent  {
         ]
       }
       menuItems.push(
-        { title: 'Tareas asignadas', url: Teacher_UrlName, icon: 'school' });
+        { title: 'Cusros inscritos', url: Teacher_UrlName, icon: 'school' });
 
-    } 
+    }
     return menuItems;
   }
 
 
 
 
-
+  userLogged: UserInterface | undefined = undefined;
 
   constructor(
-    private courseService: CourseService,
-    private router: Router) { }
-   
+    private store: Store, 
+    private router: Router) {
+    this.store.select(selectorCourseState).subscribe((state) => {
+      this.userLogged = state.user;
+    });
+  }
+
 
   user_isLogged() {
-    return this.courseService.user_isLogged();
+    return this.userLogged ? true : false;//   this.courseService.user_isLogged();
   }
   user_logged() {
-    return this.courseService.user_logged();
+    return this.userLogged;//.user_logged();
   }
 
+
   bnLogin_onClick() {
+    console.log('bnLogin_onClick');
+    this.store.dispatch(CourseActions.loginClear());
     this.router.navigate([GenerateUrl(MainApplication_UrlName, FormularioLoginComponent_UrlName)]);
   }
+
   bnLogout_onClick() {
-    this.courseService.user_logout();
+    console.log('bnLogout_onClick');
+    this.store.dispatch(CourseActions.logout());
+    //this.courseService.user_logout();
     this.router.navigate([GenerateUrl(MainApplication_UrlName)]);
   }
 
+
+  
+
+  
   title_onClick() {
     this.router.navigate([GenerateUrl(MainApplication_UrlName)]);
   }

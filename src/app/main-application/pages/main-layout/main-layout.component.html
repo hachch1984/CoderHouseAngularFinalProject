@@ -10,8 +10,8 @@
 
 
     <mat-nav-list>
-      <a mat-list-item *ngFor="let menuItem of this.getMenuItems()" [routerLink]="menuItem.url"> <mat-icon matListItemIcon
-          [fontIcon]="menuItem.icon"></mat-icon> {{ menuItem.title }}</a>
+      <a mat-list-item *ngFor="let menuItem of this.getMenuItems()" [routerLink]="menuItem.url"> <mat-icon
+          matListItemIcon [fontIcon]="menuItem.icon"></mat-icon> {{ menuItem.title }}</a>
     </mat-nav-list>
 
 
@@ -46,8 +46,8 @@
 
 
           <user-visualizador-fotografia [height]="50" [width]="50"
-            [image_base64]="this.user_logged().photoBase64"></user-visualizador-fotografia>
-          <span class="text-black-50">{{this.user_logged().email}}</span>
+            [image_base64]="this.user_logged()?.photoBase64"></user-visualizador-fotografia>
+          <span class="text-black-50">{{this.user_logged()?.email}}</span>
         </div>
       </div>
 
