@@ -19,7 +19,10 @@ export const FormularioLoginComponent_UrlName: string = 'formulario-login';
   styleUrls: ['./formulario-login.component.scss']
 })
 export class FormularioLoginComponent implements OnDestroy {
- 
+
+
+
+  private state_subscription = new Subscription();
 
   constructor(
     private store: Store,
@@ -27,19 +30,18 @@ export class FormularioLoginComponent implements OnDestroy {
     private sb: FormBuilder,
     private router: Router
   ) {
-      this.store.select(selectorCourseState).subscribe((state) => {
-
+    this.state_subscription = this.store.select(selectorCourseState).subscribe((state) => {
       if (state.operationResult.message) {
         this.openSnackBar(state.operationResult.message);
         if (state.operationResult.isSuccess) {
-         this.bnCancelar_onClick()
+          this.bnCancelar_onClick()
         }
       }
     });
   }
 
   ngOnDestroy(): void {
-    
+    this.state_subscription.unsubscribe();
   }
 
 
@@ -85,7 +87,7 @@ export class FormularioLoginComponent implements OnDestroy {
 
   }
 
-  bnCancelar_onClick() { 
+  bnCancelar_onClick() {
     this.router.navigate([GenerateUrl(MainApplication_UrlName)]);
   }
 

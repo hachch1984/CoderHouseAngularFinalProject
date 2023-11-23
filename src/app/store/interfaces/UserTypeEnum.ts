@@ -1,4 +1,4 @@
 export enum UserTypeEnum{
-    admin= 'administrador',
-    student= 'estudiante',
+    admin= 'admin',
+    student= 'student',
 }

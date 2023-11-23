@@ -42,17 +42,17 @@ export class FormularioInsertarActualizarComponent implements OnInit {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<FormularioInsertarActualizarComponent>,
     @Inject(MAT_DIALOG_DATA) public data: FormularioInsertarActualizarComponent_Data,) {
-
+      this.courseService.userType_getList().subscribe((userTypeList) => this.userTypeList = userTypeList);
   }
 
 
   ngOnInit(): void {
 
-    this.courseService.userType_getList().subscribe((userTypeList) => this.userTypeList = userTypeList);
+    
 
     if (this.data.user === undefined) {
       this.title = 'Crear Usuario';
-    } else {
+    } else { 
       this.title = "Editar Usuario"
       this.myForm.patchValue(this.data.user);
       this.image_base64 = this.data.user.photoBase64;

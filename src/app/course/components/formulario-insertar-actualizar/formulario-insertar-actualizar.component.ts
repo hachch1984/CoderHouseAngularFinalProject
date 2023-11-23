@@ -8,7 +8,7 @@ import { AreaInterface } from '../../../store/interfaces/AreaInterface';
 import { CourseInterface } from '../../../store/interfaces/CourseInterface';
 import { CourseService } from '../../../store/services/course.service';
 import { CourseType_Validator } from '../../validators/CourseType_Validator';
-import { map } from 'rxjs';
+import { Subscriber, map } from 'rxjs';
 
 
 @Component({
@@ -19,20 +19,13 @@ export class FormularioInsertarActualizarComponent implements OnInit {
 
   objArea_selectOneOption: AreaInterface = { id: '', name: '-- Seleccione un area --' };
 
-  observable_areaList = this.courseService.area_getList().pipe(
-    map(value => {
-      value.unshift(this.objArea_selectOneOption);
-
-      return value;
-    })
-  );
-
+  areasList: AreaInterface[] = []; 
   title: string = '';
 
   myForm = this.fb.group({
     id: [''],
     name: ['', [Validators.required, Validators.minLength(3)]],
-    area: [this.objArea_selectOneOption, [Validators.required, ObjectIsSelected_Validator], [CourseType_Validator(this.courseService)]],
+    area: [this.objArea_selectOneOption, [Validators.required, ObjectIsSelected_Validator] ],
     description: ['', [Validators.required, Validators.minLength(3)]],
   });
 
@@ -45,7 +38,7 @@ export class FormularioInsertarActualizarComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: CourseInterface,
   ) {
 
-
+   
   }
 
   openSnackBar(message: string) {
@@ -54,14 +47,22 @@ export class FormularioInsertarActualizarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (!this.data) {
-      this.title = 'Crear Curso';
+    this.courseService.area_getList().subscribe(values => {
+      this.areasList = values;
+      this.areasList.unshift(this.objArea_selectOneOption);
 
-    }
-    else {
-      this.title = 'Editar Curso';
-      this.myForm.patchValue(this.data);
-    }
+
+      if (!this.data) {
+        this.title = 'Crear Curso';
+  
+      }
+      else {
+        this.title = 'Editar Curso';
+        this.myForm.patchValue(this.data); 
+          this.myForm.get('area')?.setValue(  this.areasList.find(x => x.id === this.data.area!.id)! );
+      }
+    });
+   
   }
 
 

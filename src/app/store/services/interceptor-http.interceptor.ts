@@ -15,7 +15,7 @@ export class InterceptorHttpInterceptor implements HttpInterceptor {
   constructor(private courseService: CourseService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // console.log("InterceptorHttpInterceptor",new Date);
+   
     // return next.handle(request);
 
 

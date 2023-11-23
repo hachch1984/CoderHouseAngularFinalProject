@@ -13,13 +13,14 @@ export class FormModalYesNoComponent implements OnInit{
     @Inject(MAT_DIALOG_DATA) public data: FormModalYesNoInterface,
   ) { 
   }
+
   ngOnInit(): void { 
   }
-
 
   bnAceptar_onClick(): void {
     this.dialogRef.close(true);
   }
+
   bnCancelar_onClick(): void {
     this.dialogRef.close(false);
   }

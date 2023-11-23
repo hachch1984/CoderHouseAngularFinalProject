@@ -7,6 +7,7 @@ import { CourseService } from 'src/app/store/services/course.service';
   styleUrls: ['./spinner-principal.component.scss']
 })
 export class SpinnerPrincipalComponent {
+  
   constructor(private courseService: CourseService) { }
 
   loading(): boolean {

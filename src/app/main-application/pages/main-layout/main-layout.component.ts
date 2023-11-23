@@ -65,14 +65,12 @@ export class MainLayoutComponent {
   }
 
 
-  bnLogin_onClick() {
-    console.log('bnLogin_onClick');
+  bnLogin_onClick() { 
     this.store.dispatch(CourseActions.loginClear());
     this.router.navigate([GenerateUrl(MainApplication_UrlName, FormularioLoginComponent_UrlName)]);
   }
 
-  bnLogout_onClick() {
-    console.log('bnLogout_onClick');
+  bnLogout_onClick() { 
     this.store.dispatch(CourseActions.logout());
     //this.courseService.user_logout();
     this.router.navigate([GenerateUrl(MainApplication_UrlName)]);

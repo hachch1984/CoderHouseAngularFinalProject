@@ -24,7 +24,7 @@
       <mat-label>Tipo de Usuario </mat-label>
       <input matInput formControlName="userType" *ngIf="this.data.readOnly" readonly>
       <mat-select formControlName="userType" *ngIf="this.data.readOnly===false">
-        <mat-option [value]="{}">Seleccione una opcion</mat-option>
+        <mat-option value="">Seleccione una opcion</mat-option>
         <mat-option *ngFor="let userType of this.userTypeList " [value]="userType">
           {{userType | titlecase}}
         </mat-option>
